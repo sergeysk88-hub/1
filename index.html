@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<!--
+  ================================================================
+  Сайт косметолога Цырены · @tsyrena.cosmetolog
+  Один файл: HTML + CSS + JS. Просто откройте index.html в браузере.
+
+  ✏️ ЧТО ЗАМЕНИТЬ ПЕРЕД ПУБЛИКАЦИЕЙ (места помечены ✏️):
+  1. Контакты — объект CONFIG в начале <script> внизу файла
+     (WhatsApp, Telegram, телефон, адрес, часы работы).
+  2. Фото — у любого блока с классом "photo" добавьте
+     style="--img:url('имя-файла.jpg')" — заглушка исчезнет сама.
+  3. Текст «Обо мне», образование, цифры, цены и длительность процедур.
+  4. Отзывы — только реальные (например, со скриншотов из Instagram).
+  5. Фото «до/после» — только с письменного согласия пациентов.
+  6. Реквизиты, номер медицинской лицензии, политика конфиденциальности.
+  ================================================================
+-->
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Цырена — косметолог | Эстетика и инъекции</title>
+  <meta name="description" content="Косметолог Цырена: ботулинотерапия, контурная пластика, биоревитализация, чистки и пилинги. Естественный результат, сертифицированные препараты, индивидуальный план. Запись онлайн.">
+  <meta name="theme-color" content="#FFFFFF">
+
+  <!-- Open Graph — превью ссылки в мессенджерах -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Цырена — косметолог | Эстетика и инъекции">
+  <meta property="og:description" content="Естественная красота без «эффекта процедуры». Запись на консультацию онлайн.">
+  <meta property="og:locale" content="ru_RU">
+  <!-- ✏️ <meta property="og:image" content="https://ваш-сайт.ru/og-image.jpg"> -->
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%232B2320'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-style='italic' font-size='30' fill='%23F0EEE9' text-anchor='middle'%3ETs%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- Микроразметка для Яндекса и Google. ✏️ Заполните адрес, телефон и сайт -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BeautySalon",
+    "name": "Цырена — косметолог",
+    "description": "Эстетическая и инъекционная косметология",
+    "telephone": "+70000000000",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Город",
+      "streetAddress": "ул. Примерная, 1"
+    },
+    "sameAs": ["https://www.instagram.com/tsyrena.cosmetolog/"],
+    "priceRange": "₽₽"
+  }
+  </script>
+
+  <style>
+    /* =====================================================
+       ПАЛИТРА
+       Основа — белый и Cloud Dancer (Pantone, цвет 2026 года).
+       Акцент — Mocha Mousse (Pantone, цвет 2025 года).
+       Поддерживающие — пудровый нюд, песочный беж, шалфей, шампань.
+       Это сочетание сейчас используют премиальные эстетические
+       клиники и бьюти-бренды: тёпло, «чисто», вызывает доверие.
+       ===================================================== */
+    :root {
+      --white: #FFFFFF;
+      --cloud: #F0EEE9;       /* Cloud Dancer — тёплый белый */
+      --cream: #F7F4EF;
+      --sand: #EADFD3;        /* песочный нюд */
+      --blush: #EBD6CD;       /* пудрово-розовый */
+      --mocha: #A47864;       /* Mocha Mousse */
+      --mocha-deep: #7D5646;
+      --sage: #B9C3B0;        /* шалфей */
+      --sage-soft: #E2E7DC;
+      --champagne: #C9AD86;
+      --ink: #2B2320;         /* какао — основной текст */
+      --ink-soft: #5C504A;
+      --muted: #74675F;
+      --line: #E7DFD6;
+
+      --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+      --sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+      --r-sm: 12px;
+      --r: 20px;
+      --r-lg: 28px;
+      --shadow: 0 1px 2px rgba(43, 35, 32, .04), 0 18px 50px -18px rgba(43, 35, 32, .18);
+      --ease: cubic-bezier(.2, .7, .2, 1);
+      --header-h: 76px;
+    }
+
+    /* ---------- База ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--ink);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    [hidden] { display: none !important; }
+    :focus-visible { outline: 2px solid var(--mocha); outline-offset: 3px; border-radius: 6px; }
+    section[id] { scroll-margin-top: calc(var(--header-h) - 1px); }
+    ::selection { background: var(--blush); color: var(--ink); }
+
+    .container { width: min(1200px, 100% - 32px); margin-inline: auto; }
+    @media (min-width: 768px) { .container { width: min(1200px, 100% - 64px); } }
+
+    .section { padding: clamp(72px, 10vw, 128px) 0; }
+    .bg-cloud { background: var(--cloud); }
+
+    .skip {
+      position: absolute; left: 16px; top: -60px; z-index: 100;
+      background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 10px;
+      transition: top .2s;
+    }
+    .skip:focus { top: 16px; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+    }
+
+    /* Иконки */
+    .i { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---------- Типографика ---------- */
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.08; letter-spacing: -.01em; margin: 0; }
+    h1 em, h2 em, h3 em { font-style: italic; color: var(--mocha); }
+    h2 { font-size: clamp(38px, 5.2vw, 62px); }
+    p { margin: 0 0 1em; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      margin: 0 0 20px;
+      font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--mocha-deep);
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+
+    .section-head { max-width: 660px; margin-bottom: clamp(40px, 5vw, 64px); }
+    .section-head p { color: var(--muted); font-size: 17px; margin: 20px 0 0; }
+    .section-head--center { margin-inline: auto; text-align: center; }
+
+    /* ---------- Кнопки ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 54px; padding: 0 30px;
+      border-radius: 999px; border: 1px solid transparent;
+      font-size: 15px; font-weight: 600; letter-spacing: .01em; white-space: nowrap;
+      transition: background-color .3s var(--ease), color .3s, border-color .3s, transform .3s var(--ease);
+    }
+    .btn .i { width: 18px; height: 18px; transition: transform .3s var(--ease); }
+    .btn:hover .i { transform: translateX(4px); }
+    .btn:active { transform: scale(.98); }
+    .btn--primary { background: var(--ink); color: #fff; }
+    .btn--primary:hover { background: var(--mocha-deep); }
+    .btn--ghost { border-color: rgba(43, 35, 32, .22); background: rgba(255, 255, 255, .55); color: var(--ink); }
+    .btn--ghost:hover { border-color: var(--ink); background: #fff; }
+    .btn--light { background: #fff; color: var(--ink); }
+    .btn--light:hover { background: var(--blush); }
+    .btn--sm { min-height: 44px; padding: 0 22px; font-size: 14px; }
+    .btn--block { width: 100%; }
+
+    .icon-btn {
+      width: 44px; height: 44px; flex: none;
+      display: grid; place-items: center;
+      border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, .6);
+      transition: background-color .3s, border-color .3s, color .3s;
+    }
+    .icon-btn:hover { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+    .link-arrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; color: var(--mocha-deep);
+      white-space: nowrap;
+    }
+    .link-arrow .i { width: 16px; height: 16px; transition: transform .3s var(--ease); }
+    .link-arrow:hover .i { transform: translateX(4px); }
+
+    /* ---------- Шапка ---------- */
+    .header {
+      position: fixed; inset: 0 0 auto; z-index: 50;
+      height: var(--header-h);
+      border-bottom: 1px solid transparent;
+      transition: background-color .35s, border-color .35s;
+    }
+    .header.is-scrolled, .menu-open .header {
+      background: rgba(255, 255, 255, .86);
+      -webkit-backdrop-filter: saturate(1.4) blur(14px);
+      backdrop-filter: saturate(1.4) blur(14px);
+      border-color: var(--line);
+    }
+    .header__inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+    .logo { display: flex; flex-direction: column; line-height: 1; }
+    .logo__name { font-family: var(--serif); font-style: italic; font-size: 30px; font-weight: 500; }
+    .logo__sub { margin-top: 3px; padding-left: 2px; font-size: 9.5px; font-weight: 600; letter-spacing: .42em; text-transform: uppercase; color: var(--muted); }
+
+    .nav { display: flex; gap: clamp(20px, 2.4vw, 34px); }
+    .nav a { position: relative; padding: 6px 0; font-size: 14px; font-weight: 500; }
+    .nav a::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor;
+      transform: scaleX(0); transform-origin: right; transition: transform .35s var(--ease);
+    }
+    .nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    .header__actions { display: flex; align-items: center; gap: 10px; }
+
+    .burger { display: none; position: relative; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: rgba(255, 255, 255, .6); }
+    .burger span {
+      position: absolute; left: 13px; right: 13px; height: 1.5px; background: var(--ink);
+      transition: transform .35s var(--ease), top .35s var(--ease);
+    }
+    .burger span:nth-child(1) { top: 17px; }
+    .burger span:nth-child(2) { top: 25px; }
+    .menu-open .burger span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+    .menu-open .burger span:nth-child(2) { top: 21px; transform: rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed; inset: 0; z-index: 40;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+      padding: calc(var(--header-h) + 16px) 16px calc(28px + env(safe-area-inset-bottom));
+      background: var(--white);
+      overflow-y: auto;
+      opacity: 0; visibility: hidden;
+      transition: opacity .35s var(--ease), visibility .35s;
+    }
+    .menu-open .mobile-menu { opacity: 1; visibility: visible; }
+    .mobile-menu nav a {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 0; border-bottom: 1px solid var(--line);
+      font-family: var(--serif); font-size: 32px; line-height: 1.1;
+    }
+    .mobile-menu nav a .i { color: var(--mocha); }
+    .mobile-menu__foot { display: grid; gap: 12px; }
+    .mobile-menu__social { display: flex; gap: 10px; justify-content: center; }
+    .menu-open { overflow: hidden; }
+
+    @media (max-width: 1060px) {
+      .nav { display: none; }
+      .burger { display: block; }
+    }
+    @media (max-width: 560px) {
+      .header__actions .btn, .header__actions .icon-btn { display: none; }
+      .logo__name { font-size: 27px; }
+    }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative; overflow: hidden;
+      padding: calc(var(--header-h) + clamp(32px, 6vw, 72px)) 0 clamp(64px, 8vw, 112px);
+      background: linear-gradient(180deg, var(--white) 0%, var(--cloud) 100%);
+    }
+    .blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .75; pointer-events: none; }
+    .blob--1 { width: 560px; height: 560px; top: -180px; right: -140px; background: var(--blush); }
+    .blob--2 { width: 440px; height: 440px; bottom: -200px; left: -160px; background: var(--sage-soft); }
+
+    .hero__grid { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(48px, 6vw, 96px); align-items: center; }
+    .hero__title { font-size: clamp(46px, 6.2vw, 86px); line-height: .98; margin-bottom: 28px; }
+    .hero__lead { max-width: 520px; margin: 0 0 36px; font-size: clamp(16px, 1.5vw, 18px); color: var(--muted); }
+    .hero__cta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero__trust { list-style: none; margin: 40px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 14px; }
+    .hero__trust li { display: flex; align-items: center; gap: 8px; }
+    .hero__trust .i { width: 18px; height: 18px; color: var(--mocha); }
+
+    .hero__visual { position: relative; width: 100%; max-width: 500px; justify-self: end; }
+    .arch {
+      aspect-ratio: 4 / 5;
+      border-radius: 50% 50% var(--r-lg) var(--r-lg) / 40% 40% var(--r-lg) var(--r-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .float-card {
+      position: absolute; display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px;
+      background: rgba(255, 255, 255, .88);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, .9); border-radius: 18px;
+      box-shadow: var(--shadow);
+      font-size: 13px; line-height: 1.35;
+      animation: float 7s ease-in-out infinite;
+    }
+    .float-card strong { display: block; font-size: 14px; font-weight: 600; }
+    .float-card div > span, .float-card > span:not(.float-card__icon) { color: var(--muted); }
+    .float-card__icon { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--blush); color: var(--mocha-deep); flex: none; }
+    .float-card--top { top: 16%; left: -14%; }
+    .float-card--bottom { bottom: 8%; right: -8%; flex-direction: column; align-items: flex-start; gap: 2px; animation-delay: -3.5s; }
+    .stars { color: var(--champagne); letter-spacing: 2px; font-size: 13px; margin-bottom: 2px; }
+    @keyframes float { 50% { transform: translateY(-10px); } }
+
+    .badge {
+      position: absolute; top: -3%; right: -3%;
+      width: 124px; height: 124px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: var(--ink); color: #F3ECE6;
+      box-shadow: var(--shadow);
+    }
+    .badge__ring { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 24s linear infinite; }
+    .badge__ring text { font-family: var(--sans); font-size: 9.6px; font-weight: 600; letter-spacing: .2em; fill: currentColor; }
+    .badge .i { width: 26px; height: 26px; color: var(--champagne); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 900px) {
+      .hero__grid { grid-template-columns: 1fr; }
+      .hero__visual { justify-self: center; max-width: 420px; margin-top: 8px; }
+      .float-card--top { left: -8px; }
+      .float-card--bottom { right: -8px; }
+      .badge { width: 104px; height: 104px; right: -4px; }
+    }
+    @media (max-width: 480px) {
+      .hero__cta .btn { width: 100%; }
+      .hero__trust { flex-direction: column; gap: 10px; margin-top: 32px; }
+      .float-card { padding: 10px 14px; font-size: 12px; }
+      .float-card strong { font-size: 13px; }
+      .float-card__icon { width: 34px; height: 34px; }
+    }
+
+    /* ---------- Фото-заглушки ---------- */
+    .photo {
+      position: relative; overflow: hidden;
+      background:
+        var(--img, none) center / cover no-repeat,
+        var(--ph, radial-gradient(60% 50% at 30% 22%, rgba(255, 255, 255, .75), transparent 70%), linear-gradient(160deg, #F4EAE3 0%, #E8D4C9 55%, #D8BCAD 100%));
+    }
+    .photo[data-mono]:not([style*="--img"])::before {
+      content: attr(data-mono);
+      position: absolute; inset: 0; display: grid; place-items: center;
+      font-family: var(--serif); font-style: italic; font-size: clamp(72px, 11vw, 150px);
+      color: rgba(255, 255, 255, .6); letter-spacing: -.02em;
+    }
+    .photo[data-label]:not([style*="--img"])::after {
+      content: attr(data-label);
+      position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+      padding: 6px 12px; border-radius: 999px; white-space: nowrap;
+      background: rgba(255, 255, 255, .72);
+      font-size: 10.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--mocha-deep);
+    }
+
+    /* ---------- Бегущая строка ---------- */
+    .marquee { overflow: hidden; padding: 20px 0; background: var(--ink); color: #F3ECE6; }
+    .marquee__track { display: flex; width: max-content; animation: marquee 45s linear infinite; }
+    .marquee__group { display: flex; align-items: center; gap: 40px; padding-right: 40px; }
+    .marquee span { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.4vw, 28px); white-space: nowrap; }
+    .marquee b { color: var(--champagne); font-weight: 400; font-size: 14px; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    /* ---------- Обо мне ---------- */
+    .about__grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(48px, 7vw, 112px); align-items: center; }
+    .about__media { position: relative; isolation: isolate; max-width: 480px; }
+    .about__media::before {
+      content: ""; position: absolute; inset: 28px -24px -24px 28px; z-index: -1;
+      border: 1px solid var(--champagne); border-radius: var(--r-lg);
+    }
+    .about__photo { aspect-ratio: 4 / 5; border-radius: var(--r-lg); }
+    .about__photo.photo[data-label]:not([style*="--img"])::after { bottom: auto; top: 18px; }
+    .about__photo-sm {
+      position: absolute; left: -28px; bottom: -36px;
+      width: 42%; aspect-ratio: 1; border-radius: 50%;
+      border: 8px solid var(--white); box-shadow: var(--shadow);
+      --ph: radial-gradient(60% 60% at 35% 30%, rgba(255,255,255,.7), transparent 70%), linear-gradient(150deg, #E7ECE2, #C9D2C0);
+    }
+    .about__text p { color: var(--ink-soft); font-size: 17px; }
+    .about__text h2 { margin-bottom: 28px; }
+
+    .checklist { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 12px; }
+    .checklist li { display: flex; gap: 12px; align-items: flex-start; font-size: 15px; }
+    .checklist .i { width: 20px; height: 20px; margin-top: 2px; color: var(--mocha); }
+
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--line); }
+    .stat__num { font-family: var(--serif); font-size: clamp(38px, 4.5vw, 56px); line-height: 1; font-variant-numeric: lining-nums; }
+    .stat__label { margin-top: 8px; font-size: 13px; line-height: 1.4; color: var(--muted); }
+    .signature { margin-top: 32px; font-family: var(--serif); font-style: italic; font-size: 36px; color: var(--mocha); line-height: 1; }
+
+    @media (max-width: 900px) {
+      .about__grid { grid-template-columns: 1fr; }
+      .about__media { margin: 0 auto 32px; width: calc(100% - 24px); }
+      .about__photo-sm { left: -12px; }
+    }
+
+    /* ---------- Услуги ---------- */
+    .services__head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 28px; margin-bottom: 48px; }
+    .services__head .section-head { margin-bottom: 0; max-width: none; }
+
+    .tabs { display: inline-flex; gap: 4px; padding: 6px; background: #fff; border: 1px solid var(--line); border-radius: 999px; }
+    .tab { padding: 12px 24px; border: 0; border-radius: 999px; background: transparent; font-size: 14px; font-weight: 600; color: var(--muted); transition: background-color .3s, color .3s; }
+    .tab:hover { color: var(--ink); }
+    .tab[aria-selected="true"] { background: var(--ink); color: #fff; }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 20px; }
+    .card {
+      display: flex; flex-direction: column;
+      padding: 28px; background: #fff;
+      border: 1px solid var(--line); border-radius: var(--r);
+      transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
+    .card__top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 26px; }
+    .card__icon { width: 50px; height: 50px; border-radius: 50%; display: grid; place-items: center; background: var(--blush); color: var(--mocha-deep); }
+    .card:nth-child(3n+2) .card__icon { background: var(--sage-soft); color: #56634C; }
+    .card:nth-child(3n) .card__icon { background: var(--sand); }
+    .tag { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px; background: var(--cloud); font-size: 12px; font-weight: 600; color: var(--muted); }
+    .tag .i { width: 14px; height: 14px; }
+    .tag--accent { background: var(--ink); color: #fff; }
+    .card__title { font-size: 27px; margin-bottom: 12px; }
+    .card__text { flex: 1; margin: 0 0 24px; font-size: 15px; color: var(--muted); }
+    .card__list { list-style: none; margin: -8px 0 24px; padding: 0; display: grid; gap: 8px; font-size: 14px; }
+    .card__list li { display: flex; gap: 10px; align-items: flex-start; }
+    .card__list .i { width: 16px; height: 16px; margin-top: 3px; color: var(--mocha); }
+    .card__bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .price { margin: 0; font-family: var(--serif); font-size: 27px; font-weight: 600; line-height: 1; white-space: nowrap; font-variant-numeric: lining-nums; }
+    .price small { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--muted); }
+
+    .note {
+      display: flex; gap: 14px; align-items: flex-start;
+      margin-top: 32px; padding: 20px 24px;
+      border-radius: var(--r); background: rgba(255, 255, 255, .7); border: 1px dashed var(--champagne);
+      font-size: 14px; color: var(--ink-soft);
+    }
+    .note .i { color: var(--mocha); margin-top: 1px; }
+    .note p { margin: 0; }
+
+    @media (max-width: 560px) {
+      .tabs { width: 100%; }
+      .tab { flex: 1; padding: 12px 8px; }
+      .card { padding: 24px; }
+    }
+
+    /* ---------- Почему мне доверяют ---------- */
+    .why__grid { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+    .why__intro { position: sticky; top: calc(var(--header-h) + 32px); }
+    .why__intro .section-head { margin-bottom: 32px; }
+    .features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .feature { padding: 32px; border-radius: var(--r); background: var(--cloud); }
+    .feature:nth-child(2) { background: var(--blush); }
+    .feature:nth-child(3) { background: var(--sage-soft); }
+    .feature:nth-child(4) { background: var(--sand); }
+    .feature__icon { width: 52px; height: 52px; margin-bottom: 40px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .75); color: var(--ink); }
+    .feature h3 { font-size: 26px; margin-bottom: 12px; }
+    .feature p { margin: 0; font-size: 15px; color: var(--ink-soft); }
+    @media (max-width: 900px) {
+      .why__grid { grid-template-columns: 1fr; }
+      .why__intro { position: static; }
+    }
+    @media (max-width: 600px) {
+      .features { grid-template-columns: 1fr; }
+      .feature { padding: 28px 24px; }
+      .feature__icon { margin-bottom: 28px; }
+    }
+
+    /* ---------- До / После ---------- */
+    .results__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 24px; }
+    .case figcaption { margin-top: 16px; }
+    .case h3 { font-size: 24px; }
+    .case p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+
+    .compare {
+      --pos: 50%;
+      position: relative; aspect-ratio: 4 / 5; overflow: hidden;
+      border-radius: var(--r-lg);
+      cursor: ew-resize; touch-action: pan-y; user-select: none; -webkit-user-select: none;
+    }
+    .compare .photo { position: absolute; inset: 0; }
+    .compare__before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); z-index: 1; }
+    .compare__label {
+      position: absolute; top: 16px; z-index: 2;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(255, 255, 255, .85);
+      font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+    }
+    .compare__label--before { left: 16px; }
+    .compare__label--after { right: 16px; }
+    .compare__handle {
+      position: absolute; top: 0; bottom: 0; left: var(--pos); z-index: 3;
+      width: 2px; margin-left: -1px; background: #fff; pointer-events: none;
+    }
+    .compare__knob {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 46px; height: 46px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: #fff; color: var(--ink); box-shadow: 0 6px 20px rgba(43, 35, 32, .25);
+    }
+    .compare__knob .i { width: 22px; height: 22px; }
+    .compare:has(input:focus-visible) .compare__knob { outline: 2px solid var(--mocha); outline-offset: 3px; }
+    .results__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; margin-top: 40px; }
+    .disclaimer-sm { margin: 0; font-size: 13px; color: var(--muted); max-width: 560px; }
+
+    /* ---------- Как проходит приём ---------- */
+    .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+    .step { position: relative; padding-top: 32px; border-top: 1px solid var(--line); }
+    .step::before { content: ""; position: absolute; top: -5px; left: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--mocha); }
+    .step__num { font-family: var(--serif); font-style: italic; font-size: 60px; line-height: 1; color: var(--mocha); }
+    .step h3 { margin: 18px 0 10px; font-size: 25px; }
+    .step p { margin: 0; font-size: 15px; color: var(--muted); }
+    @media (max-width: 960px) { .steps { grid-template-columns: repeat(2, 1fr); row-gap: 48px; } }
+    @media (max-width: 560px) { .steps { grid-template-columns: 1fr; row-gap: 40px; } }
+
+    /* ---------- Отзывы ---------- */
+    .reviews__head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 48px; }
+    .reviews__head .section-head { margin-bottom: 0; }
+    .slider-nav { display: flex; gap: 10px; }
+    .slider-nav .icon-btn { width: 52px; height: 52px; background: #fff; }
+    .slider-nav .icon-btn:disabled { opacity: .35; pointer-events: none; }
+
+    .reviews__track {
+      display: grid; grid-auto-flow: column; grid-auto-columns: min(86%, 390px); gap: 20px;
+      overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+      padding-bottom: 8px; scrollbar-width: none;
+    }
+    .reviews__track::-webkit-scrollbar { display: none; }
+    .review {
+      scroll-snap-align: start;
+      display: flex; flex-direction: column;
+      padding: 32px; border-radius: var(--r); background: #fff; border: 1px solid var(--line);
+    }
+    .review__quote { font-family: var(--serif); font-size: 72px; line-height: .6; height: 28px; color: var(--blush); }
+    .review__text { flex: 1; margin: 16px 0 28px; font-size: 15.5px; color: var(--ink-soft); }
+    .review__author { display: flex; align-items: center; gap: 14px; padding-top: 20px; border-top: 1px solid var(--line); }
+    .avatar { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; flex: none; background: var(--sand); font-family: var(--serif); font-size: 22px; font-style: italic; }
+    .review:nth-child(2n) .avatar { background: var(--sage-soft); }
+    .review:nth-child(3n) .avatar { background: var(--blush); }
+    .review__author strong { display: block; font-size: 15px; }
+    .review__author div > span { font-size: 13px; color: var(--muted); }
+
+    /* ---------- FAQ ---------- */
+    .faq__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+    .faq__intro { position: sticky; top: calc(var(--header-h) + 32px); }
+    .faq__intro .section-head { margin-bottom: 32px; }
+    .faq__item { border-bottom: 1px solid var(--line); }
+    .faq__item:first-child { border-top: 1px solid var(--line); }
+    .faq__item summary {
+      display: flex; justify-content: space-between; align-items: center; gap: 24px;
+      padding: 26px 0; cursor: pointer; list-style: none;
+      font-family: var(--serif); font-size: clamp(21px, 2.2vw, 26px); font-weight: 500; line-height: 1.25;
+    }
+    .faq__item summary::-webkit-details-marker { display: none; }
+    .faq__icon { position: relative; width: 40px; height: 40px; flex: none; border-radius: 50%; border: 1px solid var(--line); transition: background-color .3s, border-color .3s, transform .4s var(--ease); }
+    .faq__icon::before, .faq__icon::after { content: ""; position: absolute; top: 50%; left: 50%; width: 14px; height: 1.5px; margin: -.75px 0 0 -7px; background: currentColor; transition: transform .4s var(--ease); }
+    .faq__icon::after { transform: rotate(90deg); }
+    .faq__item[open] .faq__icon { background: var(--ink); border-color: var(--ink); color: #fff; transform: rotate(180deg); }
+    .faq__item[open] .faq__icon::after { transform: rotate(0deg); }
+    .faq__body { padding: 0 64px 28px 0; color: var(--ink-soft); font-size: 16px; }
+    .faq__body p:last-child { margin: 0; }
+    @supports (interpolate-size: allow-keywords) {
+      :root { interpolate-size: allow-keywords; }
+      .faq__item::details-content { height: 0; overflow: clip; transition: height .45s var(--ease), content-visibility .45s allow-discrete; }
+      .faq__item[open]::details-content { height: auto; }
+    }
+    @media (max-width: 900px) {
+      .faq__grid { grid-template-columns: 1fr; }
+      .faq__intro { position: static; }
+      .faq__body { padding-right: 0; }
+    }
+
+    /* ---------- Запись ---------- */
+    .booking__card {
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 80px);
+      padding: clamp(28px, 6vw, 72px);
+      border-radius: 32px;
+      background:
+        radial-gradient(50% 60% at 0% 0%, rgba(164, 120, 100, .45), transparent 70%),
+        radial-gradient(40% 50% at 100% 100%, rgba(185, 195, 176, .18), transparent 70%),
+        var(--ink);
+      color: #F5EFEA;
+    }
+    .booking__card .eyebrow { color: var(--champagne); }
+    .booking__card h2 em { color: var(--champagne); }
+    .booking__text p { color: rgba(245, 239, 234, .75); font-size: 17px; margin-top: 24px; }
+    .booking__contacts { display: grid; gap: 10px; margin-top: 36px; }
+    .contact-chip {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border-radius: 16px;
+      background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1);
+      transition: background-color .3s, border-color .3s;
+    }
+    .contact-chip:hover { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .2); }
+    .contact-chip .i { color: var(--champagne); }
+    .contact-chip small { display: block; font-size: 12px; color: rgba(245, 239, 234, .6); }
+    .contact-chip strong { font-weight: 600; font-size: 15px; }
+
+    .form { display: grid; gap: 18px; align-content: start; }
+    .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .field { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
+    .field label, .field legend { padding: 0; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(245, 239, 234, .7); }
+    .field legend { margin-bottom: 8px; }
+    .opt { text-transform: none; letter-spacing: 0; font-weight: 400; color: rgba(245, 239, 234, .45); }
+    .field input, .field select, .field textarea {
+      width: 100%; min-height: 52px; padding: 13px 16px;
+      background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .16); border-radius: 14px;
+      color: #fff; font-size: 16px; outline: none;
+      transition: border-color .3s, background-color .3s;
+    }
+    .field textarea { resize: vertical; min-height: 96px; }
+    .field input::placeholder, .field textarea::placeholder { color: rgba(245, 239, 234, .4); }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--champagne); background: rgba(255, 255, 255, .1); }
+    .field select {
+      -webkit-appearance: none; appearance: none; padding-right: 44px; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23C9AD86' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center; background-size: 18px;
+    }
+    .field select option, .field select optgroup { color: var(--ink); background: #fff; }
+    .field.has-error input { border-color: #E8A792; }
+    .field__error, .form__error { min-height: 0; font-size: 13px; color: #F0B9A6; }
+    .field__error:empty, .form__error:empty { display: none; }
+
+    .pills { display: flex; gap: 8px; }
+    .field .pill { flex: 1; min-width: 0; position: relative; font-size: 14px; letter-spacing: 0; text-transform: none; color: inherit; }
+    .pill input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+    .pill span {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      min-height: 52px; padding: 0 8px; border-radius: 14px; white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .07);
+      font-size: 14px; font-weight: 600; cursor: pointer; transition: background-color .3s, border-color .3s, color .3s;
+    }
+    .pill .i { width: 18px; height: 18px; }
+    .pill input:checked + span { background: #fff; color: var(--ink); border-color: #fff; }
+    .pill input:focus-visible + span { outline: 2px solid var(--champagne); outline-offset: 2px; }
+
+    .check { display: flex; gap: 12px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: rgba(245, 239, 234, .75); cursor: pointer; }
+    .check input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .check__box { width: 22px; height: 22px; flex: none; margin-top: 1px; border-radius: 7px; border: 1px solid rgba(255, 255, 255, .3); display: grid; place-items: center; transition: background-color .25s, border-color .25s; }
+    .check__box .i { width: 14px; height: 14px; stroke-width: 2.4; color: var(--ink); opacity: 0; transition: opacity .2s; }
+    .check input:checked + .check__box { background: var(--champagne); border-color: var(--champagne); }
+    .check input:checked + .check__box .i { opacity: 1; }
+    .check input:focus-visible + .check__box { outline: 2px solid var(--champagne); outline-offset: 2px; }
+    .check a { text-decoration: underline; text-underline-offset: 3px; }
+    .form__hint { margin: 0; font-size: 13px; text-align: center; color: rgba(245, 239, 234, .55); }
+
+    .form__success { text-align: center; padding: 40px 12px; }
+    .form__success-icon { width: 72px; height: 72px; margin: 0 auto 24px; border-radius: 50%; display: grid; place-items: center; background: var(--champagne); color: var(--ink); }
+    .form__success-icon .i { width: 32px; height: 32px; stroke-width: 2; }
+    .form__success h3 { font-size: 34px; margin-bottom: 12px; }
+    .form__success p { color: rgba(245, 239, 234, .75); }
+    .form__success button { margin-top: 12px; background: none; border: 0; color: var(--champagne); text-decoration: underline; text-underline-offset: 4px; font-weight: 600; }
+
+    @media (max-width: 900px) { .booking__card { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) {
+      .booking__card { border-radius: 24px; padding: 32px 20px; }
+      .form__row { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- Контакты ---------- */
+    .contacts__grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 80px); align-items: stretch; }
+    .contact-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; }
+    .contact-list li { display: flex; gap: 18px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .contact-list li:first-child { border-top: 1px solid var(--line); }
+    .contact-list__icon { width: 46px; height: 46px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--cloud); color: var(--mocha-deep); }
+    .contact-list small { display: block; margin-bottom: 2px; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+    .contact-list strong, .contact-list a { font-size: 17px; font-weight: 500; }
+    .contact-list a:hover { color: var(--mocha-deep); }
+    .socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .socials .btn { min-height: 48px; padding: 0 20px; }
+
+    /* Стилизованная карта-заглушка.
+       ✏️ Чтобы вставить настоящую карту: yandex.ru/map-constructor → «Получить код»
+       → вставьте <iframe> внутрь .map вместо содержимого. */
+    .map {
+      position: relative; min-height: 420px; overflow: hidden;
+      border-radius: var(--r-lg);
+      background:
+        radial-gradient(circle at 78% 26%, #DCE3D5 0 70px, transparent 71px),
+        radial-gradient(circle at 18% 82%, #DCE3D5 0 54px, transparent 55px),
+        linear-gradient(118deg, transparent 47.6%, #fff 47.6% 49.6%, transparent 49.6%),
+        linear-gradient(28deg, transparent 63%, #fff 63% 64.4%, transparent 64.4%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .95) 0 3px, transparent 3px 74px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .95) 0 3px, transparent 3px 96px),
+        #ECE5DC;
+    }
+    .map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .map__pin { position: absolute; top: 44%; left: 50%; transform: translate(-50%, -100%); color: var(--ink); }
+    .map__pin-dot {
+      width: 58px; height: 58px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+      display: grid; place-items: center; background: var(--ink); box-shadow: var(--shadow);
+    }
+    .map__pin-dot span { width: 18px; height: 18px; border-radius: 50%; background: var(--champagne); }
+    .map__pin::after {
+      content: ""; position: absolute; left: 50%; top: 100%; width: 22px; height: 8px; margin: 10px 0 0 -11px;
+      border-radius: 50%; background: rgba(43, 35, 32, .25); animation: pulse 2.4s ease-out infinite;
+    }
+    @keyframes pulse { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(2.4); opacity: 0; } }
+    .map__card {
+      position: absolute; left: 20px; right: 20px; bottom: 20px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+      padding: 18px 20px; border-radius: 18px;
+      background: rgba(255, 255, 255, .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+    .map__card strong { display: block; font-size: 15px; }
+    .map__card span { font-size: 13px; color: var(--muted); }
+    @media (max-width: 900px) { .contacts__grid { grid-template-columns: 1fr; } .map { min-height: 380px; } .map__pin { top: 34%; } }
+
+    /* ---------- Instagram ---------- */
+    .insta__head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; margin-bottom: 40px; }
+    .insta__head .section-head { margin-bottom: 0; }
+    .insta__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+    .insta__tile { aspect-ratio: 1; border-radius: 16px; }
+    .insta__tile::before {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background: rgba(43, 35, 32, .35); opacity: 0; transition: opacity .35s;
+    }
+    .insta__tile .i { position: absolute; top: 50%; left: 50%; z-index: 2; width: 28px; height: 28px; margin: -14px 0 0 -14px; color: #fff; opacity: 0; transform: scale(.8); transition: opacity .35s, transform .35s var(--ease); }
+    .insta__tile:hover::before, .insta__tile:focus-visible::before { opacity: 1; }
+    .insta__tile:hover .i, .insta__tile:focus-visible .i { opacity: 1; transform: none; }
+    @media (max-width: 760px) { .insta__grid { grid-template-columns: repeat(3, 1fr); gap: 8px; } .insta__tile { border-radius: 12px; } }
+
+    /* ---------- Предупреждение (ФЗ «О рекламе», ст. 24) ---------- */
+    .warning { padding: clamp(28px, 4vw, 44px) 0; border-top: 1px solid var(--line); text-align: center; }
+    .warning p {
+      margin: 0; font-family: var(--serif); font-weight: 500;
+      font-size: clamp(20px, 3.2vw, 38px); line-height: 1.15; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ---------- Подвал ---------- */
+    .footer { padding: 64px 0 32px; background: var(--ink); color: rgba(245, 239, 234, .78); font-size: 14px; }
+    .footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 48px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+    .footer .logo { color: #F5EFEA; }
+    .footer .logo__sub { color: rgba(245, 239, 234, .5); }
+    .footer__about { max-width: 300px; margin: 20px 0 0; }
+    .footer h4 { margin: 0 0 18px; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--champagne); }
+    .footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .footer a:hover { color: #fff; }
+    .footer__bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 32px; padding-top: 28px; font-size: 12.5px; color: rgba(245, 239, 234, .5); }
+    .footer__bottom p { margin: 0; }
+    @media (max-width: 900px) { .footer__grid { grid-template-columns: 1fr 1fr; } .footer__brand { grid-column: 1 / -1; } }
+    @media (max-width: 480px) { .footer__grid { grid-template-columns: 1fr; gap: 32px; } }
+
+    /* ---------- Нижняя панель на телефоне ---------- */
+    .mbar {
+      position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 45;
+      display: none; gap: 8px; padding: 8px;
+      border-radius: 999px; border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      box-shadow: 0 12px 40px -10px rgba(43, 35, 32, .3);
+      transform: translateY(calc(100% + 40px)); transition: transform .45s var(--ease);
+    }
+    .mbar .btn { flex: 1; min-height: 48px; }
+    .mbar .icon-btn { width: 48px; height: 48px; background: var(--cloud); border-color: transparent; }
+    .mbar.is-visible { transform: none; }
+    @media (max-width: 760px) {
+      .mbar { display: flex; }
+      .footer { padding-bottom: 110px; }
+    }
+
+    /* ---------- Анимации появления ---------- */
+    .js .reveal { opacity: 0; transform: translateY(26px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+    .js .reveal.is-in { opacity: 1; transform: none; }
+    .reveal[data-delay="1"] { transition-delay: .1s; }
+    .reveal[data-delay="2"] { transition-delay: .2s; }
+    .reveal[data-delay="3"] { transition-delay: .3s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+      .js .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Иконки -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></symbol>
+    <symbol id="i-lr" viewBox="0 0 24 24"><path d="M9 7l-5 5 5 5M15 7l5 5-5 5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.3-4.4a8.5 8.5 0 1 1 15.7-4.4z"/><path d="M9.1 8.1c.3-.3.8-.2 1 .1l.9 1.8c.2.3.1.7-.2 1l-.5.5c.6 1.3 1.6 2.3 2.9 2.9l.5-.5c.3-.3.7-.4 1-.2l1.8.9c.3.2.4.7.1 1-.8 1-2.2 1.3-3.4.8-2.2-.9-3.9-2.6-4.8-4.8-.5-1.2-.2-2.6.7-3.5z" fill="currentColor" stroke="none"/></symbol>
+    <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.5 3.5L2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.2.7 1.1.9 1.6.4l2.6-2.5 4.8 3.5c.6.4 1.4.1 1.6-.6L22.9 4.9c.3-.9-.6-1.7-1.4-1.4z"/><path d="M7.5 14.1L18 7.2l-7.7 7.6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.6 2 2 0 0 1 3.1 1.4h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L7.1 9.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2.1z" transform="translate(1 1) scale(.92)"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19.5 10c0 5.8-7.5 11.5-7.5 11.5S4.5 15.8 4.5 10a7.5 7.5 0 0 1 15 0z"/><circle cx="12" cy="10" r="2.8"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6.5 6.6 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 9.6 12 3 12 3z"/><path d="M9 14.5a3 3 0 0 0 3 3"/></symbol>
+    <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M11 3.5l1.9 5.6 5.6 1.9-5.6 1.9L11 18.5l-1.9-5.6L3.5 11l5.6-1.9z"/><path d="M19 3v4M17 5h4M18.5 16.5v3M17 18h3"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 21.5s7.5-3.6 7.5-9.8V5.4L12 2.5 4.5 5.4v6.3c0 6.2 7.5 9.8 7.5 9.8z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.6 13.9 7.5 21.5l4.5-2.6 4.5 2.6-1.1-7.6"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3 2.5 8 12 13l9.5-5z"/><path d="M2.5 12.5 12 17.5l9.5-5"/><path d="M2.5 16.5 12 21.5l9.5-5" opacity=".5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5 16 16"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-face" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01"/></symbol>
+  </svg>
+
+  <a class="skip" href="#main">Перейти к содержанию</a>
+
+  <!-- ============ ШАПКА ============ -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#top" class="logo" aria-label="Tsyrena cosmetolog — на главную">
+        <span class="logo__name">Tsyrena</span>
+        <span class="logo__sub">cosmetolog</span>
+      </a>
+
+      <nav class="nav" aria-label="Основное меню">
+        <a href="#about">Обо мне</a>
+        <a href="#services">Услуги и цены</a>
+        <a href="#results">Результаты</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#faq">Вопросы</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+
+      <div class="header__actions">
+        <a class="icon-btn" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="i"><use href="#i-ig"/></svg></a>
+        <a class="btn btn--primary btn--sm" href="#booking">Записаться</a>
+        <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu"><span></span><span></span></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Мобильное меню -->
+  <div class="mobile-menu" id="mobile-menu" inert>
+    <nav aria-label="Мобильное меню">
+      <a href="#about">Обо мне <svg class="i"><use href="#i-arrow"/></svg></a>
+      <a href="#services">Услуги и цены <svg class="i"><use href="#i-arrow"/></svg></a>
+      <a href="#results">До и после <svg class="i"><use href="#i-arrow"/></svg></a>
+      <a href="#reviews">Отзывы <svg class="i"><use href="#i-arrow"/></svg></a>
+      <a href="#faq">Вопросы <svg class="i"><use href="#i-arrow"/></svg></a>
+      <a href="#contacts">Контакты <svg class="i"><use href="#i-arrow"/></svg></a>
+    </nav>
+    <div class="mobile-menu__foot">
+      <a class="btn btn--primary btn--block" href="#booking">Записаться на консультацию</a>
+      <div class="mobile-menu__social">
+        <a class="icon-btn" data-link="wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="i"><use href="#i-wa"/></svg></a>
+        <a class="icon-btn" data-link="tg" href="#" target="_blank" rel="noopener" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
+        <a class="icon-btn" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Instagram"><svg class="i"><use href="#i-ig"/></svg></a>
+        <a class="icon-btn" data-link="tel" href="#" aria-label="Позвонить"><svg class="i"><use href="#i-phone"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <span class="blob blob--1" aria-hidden="true"></span>
+      <span class="blob blob--2" aria-hidden="true"></span>
+
+      <div class="container hero__grid">
+        <div class="hero__content">
+          <p class="eyebrow reveal">Косметолог · эстетика и инъекции</p>
+          <h1 class="hero__title reveal" data-delay="1">Красота, которая выглядит <em>естественно</em></h1>
+          <p class="hero__lead reveal" data-delay="2">Помогаю сохранить свежесть и молодость лица без «эффекта процедуры». Индивидуальный план, сертифицированные препараты и бережный подход на каждом этапе.</p>
+          <div class="hero__cta reveal" data-delay="3">
+            <a class="btn btn--primary" href="#booking">Записаться на консультацию <svg class="i"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn--ghost" href="#services">Услуги и цены</a>
+          </div>
+          <ul class="hero__trust reveal" data-delay="3">
+            <li><svg class="i"><use href="#i-check"/></svg>Сертифицированные препараты</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Стерильность и одноразовые расходники</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Контроль результата через 14 дней</li>
+          </ul>
+        </div>
+
+        <div class="hero__visual reveal" data-delay="2">
+          <!-- ✏️ Главное фото: добавьте style="--img:url('hero.jpg')" -->
+          <div class="arch photo" data-mono="Ts" data-label="Ваше фото" role="img" aria-label="Цырена, косметолог"></div>
+
+          <div class="float-card float-card--top">
+            <span class="float-card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span>
+            <div><strong>Естественный результат</strong><span>без перекачанных форм</span></div>
+          </div>
+          <div class="float-card float-card--bottom">
+            <div class="stars" aria-hidden="true">★★★★★</div>
+            <strong>Индивидуальный план</strong>
+            <span>после диагностики кожи</span>
+          </div>
+
+          <div class="badge" aria-hidden="true">
+            <svg class="badge__ring" viewBox="0 0 120 120">
+              <defs><path id="badge-circle" d="M60,60 m-47,0 a47,47 0 1,1 94,0 a47,47 0 1,1 -94,0"/></defs>
+              <text textLength="292" lengthAdjust="spacing"><textPath href="#badge-circle" textLength="292" lengthAdjust="spacing">ЭСТЕТИКА · ИНЪЕКЦИИ · УХОД · </textPath></text>
+            </svg>
+            <svg class="i"><use href="#i-sparkle"/></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Бегущая строка -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <div class="marquee__group">
+          <span>Ботулинотерапия</span><b>✦</b><span>Контурная пластика</span><b>✦</b><span>Биоревитализация</span><b>✦</b><span>Полинуклеотиды</span><b>✦</b><span>Чистка лица</span><b>✦</b><span>Пилинги</span><b>✦</b><span>Массаж лица</span><b>✦</b>
+        </div>
+        <div class="marquee__group">
+          <span>Ботулинотерапия</span><b>✦</b><span>Контурная пластика</span><b>✦</b><span>Биоревитализация</span><b>✦</b><span>Полинуклеотиды</span><b>✦</b><span>Чистка лица</span><b>✦</b><span>Пилинги</span><b>✦</b><span>Массаж лица</span><b>✦</b>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ ОБО МНЕ ============ -->
+    <section class="section" id="about">
+      <div class="container about__grid">
+        <div class="about__media reveal">
+          <!-- ✏️ Фото: style="--img:url('about.jpg')" -->
+          <div class="about__photo photo" data-mono="Ц" data-label="Фото Цырены" role="img" aria-label="Цырена в кабинете"></div>
+          <!-- ✏️ Маленькое фото (кабинет, процесс работы) -->
+          <div class="about__photo-sm photo" data-label="Кабинет" role="img" aria-label="Кабинет косметолога"></div>
+        </div>
+
+        <div class="about__text">
+          <p class="eyebrow reveal">Обо мне</p>
+          <h2 class="reveal" data-delay="1">Привет, я <em>Цырена</em></h2>
+          <!-- ✏️ Замените текст на свою историю -->
+          <p class="reveal" data-delay="1">Я косметолог, и моя философия — не менять лицо, а подчёркивать его природную красоту. Я за умеренность, честность и результат, который окружающие замечают, но не могут понять, что именно изменилось.</p>
+          <p class="reveal" data-delay="2">Совмещаю эстетическую и инъекционную косметологию — так задачи решаются комплексно: от качества и тонуса кожи до возрастных изменений. Каждый план составляю индивидуально, после диагностики и подробной консультации.</p>
+
+          <!-- ✏️ Образование и квалификация -->
+          <ul class="checklist reveal" data-delay="2">
+            <li><svg class="i"><use href="#i-check"/></svg>Медицинское образование, специализация «Косметология»</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Повышение квалификации по инъекционным методикам и анатомии лица</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Регулярное обучение и обмен опытом с ведущими тренерами</li>
+          </ul>
+
+          <!-- ✏️ Укажите свои цифры -->
+          <div class="stats reveal" data-delay="3">
+            <div><div class="stat__num">5+</div><div class="stat__label">лет практики</div></div>
+            <div><div class="stat__num">100%</div><div class="stat__label">оригинальные препараты</div></div>
+            <div><div class="stat__num">14</div><div class="stat__label">дней — контрольный осмотр</div></div>
+          </div>
+          <div class="signature reveal" data-delay="3">Цырена</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ УСЛУГИ И ЦЕНЫ ============ -->
+    <!-- ✏️ Цены и длительность — примерные, замените на свои -->
+    <section class="section bg-cloud" id="services">
+      <div class="container">
+        <div class="services__head">
+          <div class="section-head">
+            <p class="eyebrow reveal">Услуги и цены</p>
+            <h2 class="reveal" data-delay="1">Процедуры для <em>вашей</em> кожи</h2>
+          </div>
+          <div class="tabs reveal" role="tablist" aria-label="Категории услуг">
+            <button class="tab" role="tab" id="tab-inj" aria-controls="panel-inj" aria-selected="true">Инъекции</button>
+            <button class="tab" role="tab" id="tab-aes" aria-controls="panel-aes" aria-selected="false" tabindex="-1">Эстетика</button>
+            <button class="tab" role="tab" id="tab-prog" aria-controls="panel-prog" aria-selected="false" tabindex="-1">Программы</button>
+          </div>
+        </div>
+
+        <!-- Инъекции -->
+        <div class="cards" role="tabpanel" id="panel-inj" aria-labelledby="tab-inj" data-group="Инъекционная косметология">
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>30 мин</span></div>
+            <h3 class="card__title">Ботулинотерапия</h3>
+            <p class="card__text">Разглаживает мимические морщины лба, межбровья и «гусиные лапки», сохраняя живую мимику. Эффект — до 4–6 месяцев.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 350 ₽ <small>/ ед.</small></p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-heart"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
+            <h3 class="card__title">Контурная пластика губ</h3>
+            <p class="card__text">Мягкий объём, чёткий контур и увлажнение. Работаю на естественность — губы выглядят как свои, только лучше.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 14 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-face"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
+            <h3 class="card__title">Контурная пластика лица</h3>
+            <p class="card__text">Скулы, подбородок, линия челюсти, носогубные складки. Восстановление утраченных объёмов и чёткий овал лица.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 16 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>40 мин</span></div>
+            <h3 class="card__title">Биоревитализация</h3>
+            <p class="card__text">Глубокое увлажнение гиалуроновой кислотой: кожа становится плотной, гладкой и сияющей изнутри.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 8 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span><span class="tag tag--accent">Тренд</span></div>
+            <h3 class="card__title">Полинуклеотиды</h3>
+            <p class="card__text">Восстанавливают и уплотняют тонкую кожу, особенно вокруг глаз. Работают с тёмными кругами, сеточкой морщин и постакне.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 10 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>40 мин</span></div>
+            <h3 class="card__title">Мезотерапия</h3>
+            <p class="card__text">Коктейли витаминов, аминокислот и пептидов для лица или кожи головы: тонус, ровный цвет, против выпадения волос.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 5 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-layers"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
+            <h3 class="card__title">Коллагеностимуляторы</h3>
+            <p class="card__text">Запускают выработку собственного коллагена: лифтинг и улучшение качества кожи с накопительным эффектом.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 20 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-face"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>30 мин</span></div>
+            <h3 class="card__title">Липолитики</h3>
+            <p class="card__text">Локальная коррекция второго подбородка и небольших жировых отложений — без операции и реабилитации.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 4 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+        </div>
+
+        <!-- Эстетика -->
+        <div class="cards" role="tabpanel" id="panel-aes" aria-labelledby="tab-aes" data-group="Эстетическая косметология" hidden>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-search"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>30 мин</span></div>
+            <h3 class="card__title">Консультация и диагностика</h3>
+            <p class="card__text">Разбираем состояние кожи и ваши задачи, составляем план процедур и домашнего ухода. Стоимость засчитывается при записи на процедуру.</p>
+            <div class="card__bottom"><p class="price">1 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>90 мин</span></div>
+            <h3 class="card__title">Комбинированная чистка</h3>
+            <p class="card__text">Ультразвуковая и мануальная чистка, успокаивающая маска. Чистые поры и ровный тон без травмирования кожи.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 4 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sun"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>45 мин</span></div>
+            <h3 class="card__title">Химические пилинги</h3>
+            <p class="card__text">Подбираю пилинг под задачу: постакне, пигментация, тусклость, расширенные поры, первые морщины.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 3 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
+            <h3 class="card__title">Профессиональный уход</h3>
+            <p class="card__text">Увлажнение, питание, лифтинг-маски по типу кожи. Восстанавливает после солнца, стресса и перелётов.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 3 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-heart"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
+            <h3 class="card__title">Массаж лица</h3>
+            <p class="card__text">Скульптурный и буккальный массаж: снимает отёки и мышечные зажимы, подтягивает овал и возвращает тонус.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 3 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>40 мин</span></div>
+            <h3 class="card__title">Карбокситерапия</h3>
+            <p class="card__text">Неинвазивная процедура с CO₂: улучшает микроциркуляцию и цвет лица, уменьшает отёки и тёмные круги.</p>
+            <div class="card__bottom"><p class="price"><small>от</small> 3 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+        </div>
+
+        <!-- Программы -->
+        <div class="cards" role="tabpanel" id="panel-prog" aria-labelledby="tab-prog" data-group="Комплексные программы" hidden>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sun"/></svg></span><span class="tag"><svg class="i"><use href="#i-calendar"/></svg>за 2–3 недели</span></div>
+            <h3 class="card__title">«Сияние к событию»</h3>
+            <p class="card__text">Перед свадьбой, фотосессией или праздником — свежая, отдохнувшая кожа точно в срок.</p>
+            <ul class="card__list">
+              <li><svg class="i"><use href="#i-check"/></svg>Чистка или мягкий пилинг</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Биоревитализация</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Уход с лифтинг-маской</li>
+            </ul>
+            <div class="card__bottom"><p class="price"><small>от</small> 14 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-layers"/></svg></span><span class="tag tag--accent">Популярно</span></div>
+            <h3 class="card__title">«Anti-age»</h3>
+            <p class="card__text">Комплексное омоложение: работаем одновременно с мимикой, качеством кожи и тонусом.</p>
+            <ul class="card__list">
+              <li><svg class="i"><use href="#i-check"/></svg>Ботулинотерапия</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Курс полинуклеотидов</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Скульптурный массаж лица</li>
+            </ul>
+            <div class="card__bottom"><p class="price"><small>от</small> 30 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span><span class="tag"><svg class="i"><use href="#i-calendar"/></svg>6–8 недель</span></div>
+            <h3 class="card__title">«Чистая кожа»</h3>
+            <p class="card__text">Для кожи, склонной к акне и воспалениям: убираем причины, а не только последствия.</p>
+            <ul class="card__list">
+              <li><svg class="i"><use href="#i-check"/></svg>Диагностика и план ухода</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Курс пилингов и чисток</li>
+              <li><svg class="i"><use href="#i-check"/></svg>Подбор домашнего ухода</li>
+            </ul>
+            <div class="card__bottom"><p class="price"><small>от</small> 18 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+        </div>
+
+        <div class="note reveal">
+          <svg class="i"><use href="#i-info"/></svg>
+          <p>Точная стоимость зависит от зоны, препарата и количества единиц — её я называю на консультации, до начала процедуры. Никаких скрытых доплат.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ПОЧЕМУ МНЕ ДОВЕРЯЮТ ============ -->
+    <section class="section" id="why">
+      <div class="container why__grid">
+        <div class="why__intro">
+          <div class="section-head">
+            <p class="eyebrow reveal">Безопасность</p>
+            <h2 class="reveal" data-delay="1">Почему мне <em>доверяют</em> лицо</h2>
+            <p class="reveal" data-delay="2">Инъекции — это медицина. Поэтому я работаю по медицинским стандартам: от сбора анамнеза до контрольного осмотра.</p>
+          </div>
+          <a class="btn btn--ghost reveal" data-delay="3" href="#booking">Задать вопрос <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="features">
+          <div class="feature reveal">
+            <div class="feature__icon"><svg class="i"><use href="#i-shield"/></svg></div>
+            <h3>Оригинальные препараты</h3>
+            <p>Только сертифицированные препараты от официальных поставщиков. Упаковку вскрываю при вас — можно проверить подлинность и срок годности.</p>
+          </div>
+          <div class="feature reveal" data-delay="1">
+            <div class="feature__icon"><svg class="i"><use href="#i-award"/></svg></div>
+            <h3>Медицинский подход</h3>
+            <p>Перед процедурой — анамнез и оценка противопоказаний. Знание анатомии лица — основа безопасного и красивого результата.</p>
+          </div>
+          <div class="feature reveal" data-delay="1">
+            <div class="feature__icon"><svg class="i"><use href="#i-drop"/></svg></div>
+            <h3>Стерильность</h3>
+            <p>Одноразовые иглы и канюли, стерилизация инструментов и обработка кабинета по медицинским стандартам.</p>
+          </div>
+          <div class="feature reveal" data-delay="2">
+            <div class="feature__icon"><svg class="i"><use href="#i-heart"/></svg></div>
+            <h3>Честность</h3>
+            <p>Не продаю лишнего. Если процедура не нужна или есть противопоказания — скажу прямо и предложу альтернативу.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ДО / ПОСЛЕ ============ -->
+    <!-- ✏️ Фото: у .compare__before и .compare__after добавьте style="--img:url('...')" -->
+    <section class="section bg-cloud" id="results">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow reveal">Результаты</p>
+          <h2 class="reveal" data-delay="1">До и <em>после</em></h2>
+          <p class="reveal" data-delay="2">Потяните ползунок, чтобы сравнить. Без фильтров и ретуши — только естественный свет.</p>
+        </div>
+
+        <div class="results__grid">
+          <figure class="case reveal" style="margin:0">
+            <div class="compare">
+              <div class="photo compare__after" style="--ph: radial-gradient(55% 45% at 45% 35%, rgba(255,255,255,.85), transparent 70%), linear-gradient(160deg, #F6E9E2, #E4C7BA)" role="img" aria-label="После процедуры"></div>
+              <div class="photo compare__before" style="--ph: linear-gradient(160deg, #E8E2DC, #CDC1B7)" role="img" aria-label="До процедуры"></div>
+              <span class="compare__label compare__label--before">До</span>
+              <span class="compare__label compare__label--after">После</span>
+              <div class="compare__handle"><span class="compare__knob"><svg class="i"><use href="#i-lr"/></svg></span></div>
+              <input class="sr-only" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после: контурная пластика губ">
+            </div>
+            <figcaption><h3>Контурная пластика губ</h3><p>1 процедура · фото через 2 недели</p></figcaption>
+          </figure>
+
+          <figure class="case reveal" data-delay="1" style="margin:0">
+            <div class="compare">
+              <div class="photo compare__after" style="--ph: radial-gradient(55% 45% at 50% 30%, rgba(255,255,255,.85), transparent 70%), linear-gradient(160deg, #F3EBE4, #DCC9BC)" role="img" aria-label="После процедуры"></div>
+              <div class="photo compare__before" style="--ph: linear-gradient(160deg, #E4DED8, #C8BCB2)" role="img" aria-label="До процедуры"></div>
+              <span class="compare__label compare__label--before">До</span>
+              <span class="compare__label compare__label--after">После</span>
+              <div class="compare__handle"><span class="compare__knob"><svg class="i"><use href="#i-lr"/></svg></span></div>
+              <input class="sr-only" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после: ботулинотерапия">
+            </div>
+            <figcaption><h3>Ботулинотерапия лба</h3><p>1 процедура · фото через 14 дней</p></figcaption>
+          </figure>
+
+          <figure class="case reveal" data-delay="2" style="margin:0">
+            <div class="compare">
+              <div class="photo compare__after" style="--ph: radial-gradient(55% 45% at 40% 35%, rgba(255,255,255,.9), transparent 70%), linear-gradient(160deg, #F1EEE6, #D6DCCC)" role="img" aria-label="После процедуры"></div>
+              <div class="photo compare__before" style="--ph: linear-gradient(160deg, #E2DFD8, #C5C2B6)" role="img" aria-label="До процедуры"></div>
+              <span class="compare__label compare__label--before">До</span>
+              <span class="compare__label compare__label--after">После</span>
+              <div class="compare__handle"><span class="compare__knob"><svg class="i"><use href="#i-lr"/></svg></span></div>
+              <input class="sr-only" type="range" min="0" max="100" value="50" aria-label="Сравнение до и после: биоревитализация">
+            </div>
+            <figcaption><h3>Биоревитализация</h3><p>Курс 3 процедуры · фото через месяц</p></figcaption>
+          </figure>
+        </div>
+
+        <div class="results__foot reveal">
+          <p class="disclaimer-sm">Результат индивидуален и зависит от особенностей организма. Фотографии опубликованы с письменного согласия пациентов.</p>
+          <a class="btn btn--ghost" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener"><svg class="i"><use href="#i-ig"/></svg>Больше работ в Instagram*</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ КАК ПРОХОДИТ ПРИЁМ ============ -->
+    <section class="section" id="process">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow reveal">Как проходит приём</p>
+          <h2 class="reveal" data-delay="1">Спокойно, понятно <em>и без спешки</em></h2>
+        </div>
+        <ol class="steps">
+          <li class="step reveal">
+            <div class="step__num">01</div>
+            <h3>Консультация</h3>
+            <p>Обсуждаем ваши желания, проводим диагностику кожи и проверяем противопоказания.</p>
+          </li>
+          <li class="step reveal" data-delay="1">
+            <div class="step__num">02</div>
+            <h3>План</h3>
+            <p>Составляю индивидуальный план: процедуры, препараты, сроки и итоговая стоимость — заранее.</p>
+          </li>
+          <li class="step reveal" data-delay="2">
+            <div class="step__num">03</div>
+            <h3>Процедура</h3>
+            <p>Комфортно, с аппликационной анестезией. Вскрываю препарат при вас, объясняю каждый шаг.</p>
+          </li>
+          <li class="step reveal" data-delay="3">
+            <div class="step__num">04</div>
+            <h3>Сопровождение</h3>
+            <p>Даю памятку по восстановлению, остаюсь на связи и приглашаю на контрольный осмотр через 14 дней.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ ОТЗЫВЫ ============ -->
+    <!-- ✏️ Замените на реальные отзывы клиенток (с их согласия) -->
+    <section class="section bg-cloud" id="reviews">
+      <div class="container">
+        <div class="reviews__head">
+          <div class="section-head">
+            <p class="eyebrow reveal">Отзывы</p>
+            <h2 class="reveal" data-delay="1">Что говорят <em>клиентки</em></h2>
+          </div>
+          <div class="slider-nav reveal">
+            <button class="icon-btn" type="button" data-dir="-1" aria-label="Предыдущий отзыв"><svg class="i"><use href="#i-left"/></svg></button>
+            <button class="icon-btn" type="button" data-dir="1" aria-label="Следующий отзыв"><svg class="i"><use href="#i-right"/></svg></button>
+          </div>
+        </div>
+
+        <div class="reviews__track reveal" tabindex="0" aria-label="Отзывы клиенток">
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Очень боялась эффекта «уточки», но Цырена сделала ровно то, что я хотела: губы аккуратные и выглядят естественно. Никто не понял, что я что-то делала — все просто говорят, что я посвежела.</p>
+            <div class="review__author"><span class="avatar">А</span><div><strong>Анна</strong><span>Контурная пластика губ</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Пришла с морщинами на лбу и страхом «замороженного» лица. Мимика осталась живой, а лицо стало отдохнувшим. Отдельное спасибо за подробную консультацию и контрольный осмотр.</p>
+            <div class="review__author"><span class="avatar">М</span><div><strong>Мария</strong><span>Ботулинотерапия</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Долго боролась с постакне. Цырена подобрала курс пилингов и домашний уход — через два месяца кожа стала ровной, впервые за много лет хожу без тонального крема.</p>
+            <div class="review__author"><span class="avatar">Е</span><div><strong>Екатерина</strong><span>Программа «Чистая кожа»</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Делала биоревитализацию перед свадьбой. Кожа буквально светилась на фото! В кабинете уютно и очень чисто, всё объясняют, не навязывают лишнего.</p>
+            <div class="review__author"><span class="avatar">О</span><div><strong>Ольга</strong><span>«Сияние к событию»</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Хожу к Цырене на массаж и уходы уже полгода. Руки волшебные: отёки уходят, овал подтянулся. Это мой любимый час в месяце.</p>
+            <div class="review__author"><span class="avatar">Д</span><div><strong>Дарья</strong><span>Массаж лица</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq">
+      <div class="container faq__grid">
+        <div class="faq__intro">
+          <div class="section-head">
+            <p class="eyebrow reveal">Вопросы</p>
+            <h2 class="reveal" data-delay="1">Частые <em>вопросы</em></h2>
+            <p class="reveal" data-delay="2">Не нашли ответ? Напишите мне — отвечу лично и подскажу, с чего начать.</p>
+          </div>
+          <a class="btn btn--primary reveal" data-delay="3" data-link="wa" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>Написать в WhatsApp</a>
+        </div>
+
+        <div class="faq__list reveal">
+          <details class="faq__item" name="faq" open>
+            <summary>Больно ли делать инъекции?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>Большинство процедур проходит с аппликационной анестезией — кремом, который наносится за 20–30 минут. Используются тонкие иглы и канюли, поэтому ощущения терпимые, а многие препараты уже содержат анестетик.</p></div>
+          </details>
+          <details class="faq__item" name="faq">
+            <summary>Когда будет виден результат?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>После контурной пластики — сразу, окончательный результат через 2 недели, когда уйдёт отёк. После ботулинотерапии эффект нарастает 3–14 дней. Биоревитализация и полинуклеотиды дают накопительный эффект после курса.</p></div>
+          </details>
+          <details class="faq__item" name="faq">
+            <summary>Какие есть противопоказания?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>Основные: беременность и грудное вскармливание, острые воспаления и герпес в зоне процедуры, обострение хронических и аутоиммунных заболеваний, нарушения свёртываемости крови, онкологические заболевания. Полный список уточняю на консультации.</p></div>
+          </details>
+          <details class="faq__item" name="faq">
+            <summary>Как подготовиться к процедуре?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>За 2–3 дня исключите алкоголь, за сутки — интенсивный спорт. Если принимаете препараты, разжижающие кровь, обязательно скажите об этом заранее. Подробную памятку пришлю после записи.</p></div>
+          </details>
+          <details class="faq__item" name="faq">
+            <summary>Сколько держится эффект?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>В среднем ботулинотерапия — 4–6 месяцев, контурная пластика губ — 6–12 месяцев, коррекция скул и подбородка — до 12–18 месяцев. Срок зависит от препарата, обмена веществ и образа жизни.</p></div>
+          </details>
+          <details class="faq__item" name="faq">
+            <summary>Можно ли совмещать процедуры?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>Да, и часто это даёт лучший результат. Но порядок и интервалы важны — их я продумываю в индивидуальном плане, чтобы процедуры усиливали друг друга, а не мешали.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ЗАПИСЬ ============ -->
+    <section class="section bg-cloud" id="booking">
+      <div class="container">
+        <div class="booking__card reveal">
+          <div class="booking__text">
+            <p class="eyebrow">Запись</p>
+            <h2>Запишитесь на <em>консультацию</em></h2>
+            <p>Расскажите, что хотите изменить, — я свяжусь с вами, подберу удобное время и отвечу на все вопросы.</p>
+            <div class="booking__contacts">
+              <a class="contact-chip" data-link="wa" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg><span><small>Быстрее всего</small><strong>Написать в WhatsApp</strong></span></a>
+              <a class="contact-chip" data-link="tg" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-tg"/></svg><span><small>Удобно в Telegram</small><strong>Написать в Telegram</strong></span></a>
+              <a class="contact-chip" data-link="tel" href="#"><svg class="i"><use href="#i-phone"/></svg><span><small>Позвонить</small><strong data-text="phoneDisplay">+7 (000) 000-00-00</strong></span></a>
+            </div>
+          </div>
+
+          <div>
+            <form class="form" id="booking-form" novalidate>
+              <div class="form__row">
+                <div class="field">
+                  <label for="f-name">Ваше имя</label>
+                  <input id="f-name" name="name" type="text" autocomplete="given-name" placeholder="Как к вам обращаться" required>
+                  <span class="field__error" id="e-name" aria-live="polite"></span>
+                </div>
+                <div class="field">
+                  <label for="f-phone">Телефон</label>
+                  <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 (___) ___-__-__" required>
+                  <span class="field__error" id="e-phone" aria-live="polite"></span>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="f-service">Процедура</label>
+                <select id="f-service" name="service">
+                  <option value="Консультация">Не знаю — нужна консультация</option>
+                </select>
+              </div>
+
+              <div class="form__row">
+                <div class="field">
+                  <label for="f-time">Удобное время</label>
+                  <select id="f-time" name="time">
+                    <option>Любое</option>
+                    <option>Утро (10:00–13:00)</option>
+                    <option>День (13:00–17:00)</option>
+                    <option>Вечер (17:00–20:00)</option>
+                    <option>Выходные</option>
+                  </select>
+                </div>
+                <fieldset class="field">
+                  <legend>Куда ответить</legend>
+                  <div class="pills">
+                    <label class="pill"><input type="radio" name="via" value="wa" checked><span><svg class="i"><use href="#i-wa"/></svg>WhatsApp</span></label>
+                    <label class="pill"><input type="radio" name="via" value="tg"><span><svg class="i"><use href="#i-tg"/></svg>Telegram</span></label>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="field">
+                <label for="f-comment">Комментарий <span class="opt">— необязательно</span></label>
+                <textarea id="f-comment" name="comment" rows="3" placeholder="Например: хочу убрать морщины на лбу"></textarea>
+              </div>
+
+              <label class="check">
+                <input type="checkbox" name="consent" required>
+                <span class="check__box"><svg class="i"><use href="#i-check"/></svg></span>
+                <span>Соглашаюсь на обработку персональных данных в соответствии с <a href="#" target="_blank">политикой конфиденциальности</a></span>
+              </label>
+              <span class="form__error" id="e-consent" aria-live="polite"></span>
+
+              <button class="btn btn--light btn--block" type="submit">Отправить заявку <svg class="i"><use href="#i-arrow"/></svg></button>
+              <p class="form__hint">Заявка откроется в выбранном мессенджере — останется нажать «Отправить».</p>
+            </form>
+
+            <div class="form__success" id="form-success" role="status" hidden>
+              <div class="form__success-icon"><svg class="i"><use href="#i-check"/></svg></div>
+              <h3>Спасибо!</h3>
+              <p>Отправьте сообщение в открывшемся мессенджере — я отвечу и подберу удобное время.</p>
+              <button type="button" id="form-reset">Заполнить ещё раз</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ КОНТАКТЫ ============ -->
+    <section class="section" id="contacts">
+      <div class="container contacts__grid">
+        <div>
+          <div class="section-head" style="margin-bottom:32px">
+            <p class="eyebrow reveal">Контакты</p>
+            <h2 class="reveal" data-delay="1">Жду вас <em>в кабинете</em></h2>
+          </div>
+          <ul class="contact-list reveal" data-delay="2">
+            <li><span class="contact-list__icon"><svg class="i"><use href="#i-pin"/></svg></span><div><small>Адрес</small><strong data-text="address">г. Город, ул. Примерная, 1, кабинет 5</strong></div></li>
+            <li><span class="contact-list__icon"><svg class="i"><use href="#i-clock"/></svg></span><div><small>Часы работы</small><strong data-text="hours">Пн–Сб: 10:00–20:00, по записи</strong></div></li>
+            <li><span class="contact-list__icon"><svg class="i"><use href="#i-phone"/></svg></span><div><small>Телефон</small><a data-link="tel" data-text="phoneDisplay" href="#">+7 (000) 000-00-00</a></div></li>
+          </ul>
+          <div class="socials reveal" data-delay="3">
+            <a class="btn btn--ghost" data-link="wa" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-wa"/></svg>WhatsApp</a>
+            <a class="btn btn--ghost" data-link="tg" href="#" target="_blank" rel="noopener"><svg class="i"><use href="#i-tg"/></svg>Telegram</a>
+            <a class="btn btn--ghost" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener"><svg class="i"><use href="#i-ig"/></svg>Instagram*</a>
+          </div>
+        </div>
+
+        <div class="map reveal" data-delay="1">
+          <div class="map__pin" aria-hidden="true"><div class="map__pin-dot"><span></span></div></div>
+          <div class="map__card">
+            <div><strong>Кабинет косметологии</strong><span data-text="address">г. Город, ул. Примерная, 1, кабинет 5</span></div>
+            <a class="btn btn--primary btn--sm" data-link="map" href="#" target="_blank" rel="noopener">Построить маршрут</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ INSTAGRAM ============ -->
+    <!-- ✏️ Вставьте фото из своих публикаций: style="--img:url('post1.jpg')" -->
+    <section class="section bg-cloud" id="instagram">
+      <div class="container">
+        <div class="insta__head">
+          <div class="section-head">
+            <p class="eyebrow reveal">Instagram*</p>
+            <h2 class="reveal" data-delay="1"><em>@tsyrena.cosmetolog</em></h2>
+            <p class="reveal" data-delay="2">Работы, советы по уходу и закулисье кабинета — подписывайтесь.</p>
+          </div>
+          <a class="btn btn--primary reveal" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener">Подписаться <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="insta__grid reveal">
+          <a class="insta__tile photo" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Публикация в Instagram" style="--ph: radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,.7), transparent 70%), linear-gradient(150deg, #F2E4DC, #DDBFB1)"><svg class="i"><use href="#i-ig"/></svg></a>
+          <a class="insta__tile photo" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Публикация в Instagram" style="--ph: radial-gradient(60% 60% at 60% 30%, rgba(255,255,255,.7), transparent 70%), linear-gradient(150deg, #E9EDE4, #C5CFBB)"><svg class="i"><use href="#i-ig"/></svg></a>
+          <a class="insta__tile photo" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Публикация в Instagram" style="--ph: radial-gradient(60% 60% at 40% 40%, rgba(255,255,255,.6), transparent 70%), linear-gradient(150deg, #EFE6DB, #D3BFA6)"><svg class="i"><use href="#i-ig"/></svg></a>
+          <a class="insta__tile photo" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Публикация в Instagram" style="--ph: radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,.5), transparent 70%), linear-gradient(150deg, #C9A693, #A47864)"><svg class="i"><use href="#i-ig"/></svg></a>
+          <a class="insta__tile photo" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Публикация в Instagram" style="--ph: radial-gradient(60% 60% at 50% 30%, rgba(255,255,255,.8), transparent 70%), linear-gradient(150deg, #F6F1EB, #E2D6CA)"><svg class="i"><use href="#i-ig"/></svg></a>
+          <a class="insta__tile photo" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener" aria-label="Публикация в Instagram" style="--ph: radial-gradient(60% 60% at 30% 30%, rgba(255,255,255,.6), transparent 70%), linear-gradient(150deg, #EBD6CD, #CFA899)"><svg class="i"><use href="#i-ig"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Обязательное предупреждение для рекламы медицинских услуг (ФЗ «О рекламе», ст. 24) -->
+    <div class="warning">
+      <div class="container"><p>Имеются противопоказания. Необходима консультация специалиста</p></div>
+    </div>
+  </main>
+
+  <!-- ============ ПОДВАЛ ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__brand">
+          <a href="#top" class="logo"><span class="logo__name">Tsyrena</span><span class="logo__sub">cosmetolog</span></a>
+          <p class="footer__about">Эстетическая и инъекционная косметология. Естественная красота без «эффекта процедуры».</p>
+        </div>
+        <div>
+          <h4>Навигация</h4>
+          <ul>
+            <li><a href="#about">Обо мне</a></li>
+            <li><a href="#services">Услуги и цены</a></li>
+            <li><a href="#results">До и после</a></li>
+            <li><a href="#reviews">Отзывы</a></li>
+            <li><a href="#faq">Вопросы</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Контакты</h4>
+          <ul>
+            <li><a data-link="tel" data-text="phoneDisplay" href="#">+7 (000) 000-00-00</a></li>
+            <li><a data-link="wa" href="#" target="_blank" rel="noopener">WhatsApp</a></li>
+            <li><a data-link="tg" href="#" target="_blank" rel="noopener">Telegram</a></li>
+            <li><a data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener">Instagram*</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Документы</h4>
+          <!-- ✏️ Ссылки на документы -->
+          <ul>
+            <li><a href="#">Политика конфиденциальности</a></li>
+            <li><a href="#">Согласие на обработку данных</a></li>
+            <li><a href="#">Медицинская лицензия</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <!-- ✏️ Реквизиты и лицензия -->
+        <p>© <span id="year">2026</span> Tsyrena cosmetolog. ИП Фамилия И. О., ИНН 000000000000. Лицензия № Л000-00000-00/00000000.</p>
+        <p>* Instagram принадлежит компании Meta, признанной экстремистской и запрещённой на территории РФ.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Нижняя панель записи на телефоне -->
+  <div class="mbar" id="mbar">
+    <a class="btn btn--primary" href="#booking">Записаться</a>
+    <a class="icon-btn" data-link="wa" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="i"><use href="#i-wa"/></svg></a>
+    <a class="icon-btn" data-link="tg" href="#" target="_blank" rel="noopener" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
+  </div>
+
+  <script>
+    /* =====================================================
+       ✏️ КОНТАКТЫ — меняются здесь, и обновляются по всему сайту
+       ===================================================== */
+    const CONFIG = {
+      whatsapp: '70000000000',          // номер для WhatsApp: только цифры, с 7 в начале
+      telegram: 'your_telegram',        // username в Telegram без @
+      phone: '+70000000000',            // номер для звонка
+      phoneDisplay: '+7 (000) 000-00-00',
+      instagram: 'tsyrena.cosmetolog',
+      address: 'г. Город, ул. Примерная, 1, кабинет 5',
+      hours: 'Пн–Сб: 10:00–20:00, по записи',
+    };
+
+    (() => {
+      const $ = (s, root = document) => root.querySelector(s);
+      const $$ = (s, root = document) => [...root.querySelectorAll(s)];
+
+      /* ---------- Подстановка контактов ---------- */
+      const links = {
+        wa: `https://wa.me/${CONFIG.whatsapp}`,
+        tg: `https://t.me/${CONFIG.telegram}`,
+        tel: `tel:${CONFIG.phone}`,
+        ig: `https://www.instagram.com/${CONFIG.instagram}/`,
+        map: `https://yandex.ru/maps/?text=${encodeURIComponent(CONFIG.address)}`,
+      };
+      $$('[data-link]').forEach(a => { if (links[a.dataset.link]) a.href = links[a.dataset.link]; });
+      $$('[data-text]').forEach(el => { if (CONFIG[el.dataset.text]) el.textContent = CONFIG[el.dataset.text]; });
+      $('#year').textContent = new Date().getFullYear();
+
+      /* ---------- Шапка ---------- */
+      const header = $('#header');
+      const mbar = $('#mbar');
+      const booking = $('#booking');
+      let bookingVisible = false;
+
+      const onScroll = () => {
+        const y = window.scrollY;
+        header.classList.toggle('is-scrolled', y > 10);
+        mbar.classList.toggle('is-visible', y > 520 && !bookingVisible && !document.body.classList.contains('menu-open'));
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      new IntersectionObserver(([e]) => { bookingVisible = e.isIntersecting; onScroll(); }, { threshold: .15 }).observe(booking);
+      onScroll();
+
+      /* ---------- Мобильное меню ---------- */
+      const burger = $('.burger');
+      const menu = $('#mobile-menu');
+      const toggleMenu = (open) => {
+        document.body.classList.toggle('menu-open', open);
+        burger.setAttribute('aria-expanded', open);
+        burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+        menu.inert = !open;
+        onScroll();
+      };
+      burger.addEventListener('click', () => toggleMenu(!document.body.classList.contains('menu-open')));
+      $$('a', menu).forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && document.body.classList.contains('menu-open')) { toggleMenu(false); burger.focus(); } });
+      window.matchMedia('(min-width: 1061px)').addEventListener('change', e => { if (e.matches) toggleMenu(false); });
+
+      /* ---------- Появление при прокрутке ---------- */
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
+      }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+      $$('.reveal').forEach(el => io.observe(el));
+
+      /* ---------- Вкладки услуг ---------- */
+      const tabs = $$('[role="tab"]');
+      const activate = (tab, focus) => {
+        tabs.forEach(t => {
+          const on = t === tab;
+          t.setAttribute('aria-selected', on);
+          t.tabIndex = on ? 0 : -1;
+          $('#' + t.getAttribute('aria-controls')).hidden = !on;
+        });
+        if (focus) tab.focus();
+      };
+      tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => activate(tab));
+        tab.addEventListener('keydown', e => {
+          const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+          if (step) { e.preventDefault(); activate(tabs[(i + step + tabs.length) % tabs.length], true); }
+        });
+      });
+
+      /* ---------- Список процедур в форме (собирается из карточек) ---------- */
+      const select = $('#f-service');
+      $$('[role="tabpanel"]').forEach(panel => {
+        const group = document.createElement('optgroup');
+        group.label = panel.dataset.group;
+        $$('.card__title', panel).forEach(h => group.append(new Option(h.textContent, h.textContent)));
+        select.append(group);
+      });
+      $$('[data-book]').forEach(btn => btn.addEventListener('click', () => {
+        select.value = btn.closest('.card').querySelector('.card__title').textContent;
+      }));
+
+      /* ---------- До / После ---------- */
+      $$('.compare').forEach(c => {
+        const range = $('input', c);
+        const set = v => { range.value = v; c.style.setProperty('--pos', v + '%'); };
+        const fromX = x => { const r = c.getBoundingClientRect(); set(Math.min(100, Math.max(0, (x - r.left) / r.width * 100))); };
+        let drag = false;
+        c.addEventListener('pointerdown', e => { drag = true; c.setPointerCapture(e.pointerId); fromX(e.clientX); });
+        c.addEventListener('pointermove', e => { if (drag) fromX(e.clientX); });
+        ['pointerup', 'pointercancel'].forEach(t => c.addEventListener(t, () => { drag = false; }));
+        range.addEventListener('input', () => set(range.value));
+      });
+
+      /* ---------- Слайдер отзывов ---------- */
+      const track = $('.reviews__track');
+      const navBtns = $$('.slider-nav [data-dir]');
+      const updateNav = () => {
+        const max = track.scrollWidth - track.clientWidth - 2;
+        navBtns[0].disabled = track.scrollLeft <= 2;
+        navBtns[1].disabled = track.scrollLeft >= max;
+      };
+      navBtns.forEach(b => b.addEventListener('click', () => {
+        const card = track.firstElementChild.getBoundingClientRect().width + 20;
+        track.scrollBy({ left: card * b.dataset.dir, behavior: 'smooth' });
+      }));
+      track.addEventListener('scroll', updateNav, { passive: true });
+      window.addEventListener('resize', updateNav);
+      updateNav();
+
+      /* ---------- Маска телефона ---------- */
+      const phone = $('#f-phone');
+      const formatPhone = v => {
+        let d = v.replace(/\D/g, '');
+        if (!d) return '';
+        if (d[0] === '8') d = '7' + d.slice(1);
+        if (d[0] !== '7') d = '7' + d;
+        d = d.slice(0, 11);
+        let out = '+7';
+        if (d.length > 1) out += ' (' + d.slice(1, 4);
+        if (d.length >= 4) out += ')';
+        if (d.length > 4) out += ' ' + d.slice(4, 7);
+        if (d.length > 7) out += '-' + d.slice(7, 9);
+        if (d.length > 9) out += '-' + d.slice(9, 11);
+        return out;
+      };
+      phone.addEventListener('input', () => { phone.value = formatPhone(phone.value); });
+
+      /* ---------- Отправка заявки в мессенджер ---------- */
+      const form = $('#booking-form');
+      const success = $('#form-success');
+      const setError = (input, errEl, msg) => {
+        errEl.textContent = msg;
+        input.closest('.field')?.classList.toggle('has-error', !!msg);
+        input.setAttribute('aria-invalid', !!msg);
+      };
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+        const f = form.elements;
+        const nameInput = $('#f-name');
+        const name = nameInput.value.trim();
+        const digits = phone.value.replace(/\D/g, '');
+        let ok = true;
+
+        setError(nameInput, $('#e-name'), name.length < 2 ? 'Пожалуйста, укажите имя' : '');
+        setError(phone, $('#e-phone'), digits.length !== 11 ? 'Введите номер полностью' : '');
+        setError(f.consent, $('#e-consent'), !f.consent.checked ? 'Нужно согласие на обработку данных' : '');
+        if (name.length < 2) { ok = false; nameInput.focus(); }
+        else if (digits.length !== 11) { ok = false; phone.focus(); }
+        else if (!f.consent.checked) { ok = false; f.consent.focus(); }
+        if (!ok) return;
+
+        const comment = f.comment.value.trim();
+        const text = [
+          'Здравствуйте, Цырена! Хочу записаться.',
+          `Имя: ${name}`,
+          `Телефон: ${phone.value}`,
+          `Процедура: ${f.service.value}`,
+          `Удобное время: ${f.time.value}`,
+          comment && `Комментарий: ${comment}`,
+        ].filter(Boolean).join('\n');
+
+        const url = f.via.value === 'tg'
+          ? `https://t.me/${CONFIG.telegram}?text=${encodeURIComponent(text)}`
+          : `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
+        window.open(url, '_blank', 'noopener');
+
+        form.hidden = true;
+        success.hidden = false;
+      });
+
+      $('#form-reset').addEventListener('click', () => {
+        form.reset();
+        success.hidden = true;
+        form.hidden = false;
+        $('#f-name').focus();
+      });
+    })();
+  </script>
+</body>
+</html>
