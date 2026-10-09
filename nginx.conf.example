@@ -1,5 +1,8 @@
-# Фрагмент для nginx (внутрь блока server { ... } с HTTPS)
-location ~ /\.            { deny all; }
+# Фрагмент для nginx (внутрь блока server { ... } с HTTPS).
+# Внимание: если в каком-то location есть свой add_header, заголовки ниже там НЕ действуют —
+# повторите их внутри такого location.
+location ^~ /.well-known/acme-challenge/ { allow all; default_type text/plain; }   # для Let's Encrypt
+location ~ /\.(?!well-known/) { deny all; }
 location ~ ^/(README\.md|_headers|nginx\.conf\.example|tools/) { deny all; }
 
 autoindex off;
@@ -9,4 +12,5 @@ add_header X-Content-Type-Options "nosniff" always;
 add_header Referrer-Policy "no-referrer" always;
 add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()" always;
 add_header Cross-Origin-Opener-Policy "same-origin" always;
-add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+# Включите после того, как убедитесь, что сертификат продлевается автоматически:
+# add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;

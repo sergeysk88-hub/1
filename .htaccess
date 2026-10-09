@@ -4,7 +4,8 @@ Options -Indexes
 <IfModule mod_rewrite.c>
   RewriteEngine On
   # Не отдавать служебные файлы: .git, .htaccess, README, утилиты
-  RewriteRule (^|/)\. - [F,L]
+  # (.well-known нужен для выпуска SSL-сертификата Let's Encrypt — его не трогаем)
+  RewriteRule "(^|/)\.(?!well-known/)" - [F,L]
   RewriteRule ^(README\.md|_headers|nginx\.conf\.example|tools/) - [F,L]
   # Перенаправление на HTTPS (раскомментируйте, когда подключите SSL-сертификат)
   # RewriteCond %{HTTPS} !=on

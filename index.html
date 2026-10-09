@@ -17,8 +17,8 @@
   6. Реквизиты, номер медицинской лицензии, текст политики (<dialog id="privacy">).
 
   БЕЗОПАСНОСТЬ: в head задана Content-Security-Policy — браузер выполнит
-  только два встроенных скрипта этого файла (по их sha256-хешам). Если вы
-  меняете их код (не site-config!), пересчитайте хеши:
+  только два встроенных скрипта с атрибутом data-csp (по их sha256-хешам).
+  Если вы меняете их код (не site-config!), пересчитайте хеши:
   node tools/update-csp.mjs — иначе браузер заблокирует изменённый скрипт.
   ================================================================
 -->
@@ -28,7 +28,7 @@
   <!-- Защита: браузер выполняет только скрипты с этими хешами (см. tools/update-csp.mjs),
        форма не может никуда «отправиться» сама (form-action 'none'), нельзя подменить <base>.
        frame-ancestors (защита от встраивания во фрейм) задаётся заголовком сервера — см. _headers / .htaccess -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-SnWiRJByHPu7k9QXtJG7eKhS7I/TQdE3cFQlg1JK4JY='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://yandex.ru https://*.yandex.ru; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-9VNcMZ737x0EKsYjPm+DM6WigY3xJ5WJqoHIQhcgyBs='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://yandex.ru https://*.yandex.ru; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Цырена — косметолог | Эстетика и инъекции</title>
@@ -48,7 +48,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <script>document.documentElement.classList.add('js');</script>
+  <script data-csp>document.documentElement.classList.add('js');</script>
 
   <!-- Микроразметка для Яндекса и Google. ✏️ Не связана с site-config — заполните адрес, телефон и сайт вручную -->
   <script type="application/ld+json">
@@ -604,6 +604,8 @@
 
     .form { display: grid; gap: 18px; align-content: start; }
     .form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form__row--one { grid-template-columns: 1fr; }
+    .form.is-off .field, .form.is-off .check { opacity: .55; }
     .field { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; min-width: 0; }
     .field label, .field legend { padding: 0; font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: rgba(245, 239, 234, .7); }
     .field legend { margin-bottom: 8px; }
@@ -746,7 +748,7 @@
       background: var(--white); color: var(--ink); box-shadow: var(--shadow); overflow: auto;
     }
     .legal::backdrop { background: rgba(43, 35, 32, .55); }
-    .legal:target { display: block; position: fixed; inset: 0; margin: auto; z-index: 100; } /* без JS */
+    html:not(.app) .legal:target { display: block; position: fixed; inset: 0; margin: auto; z-index: 100; } /* без JS */
     .legal__inner { position: relative; padding: clamp(28px, 5vw, 52px); }
     .legal__close { position: absolute; top: 16px; right: 16px; font-size: 22px; line-height: 1; }
     .legal h2 { font-size: clamp(30px, 4vw, 42px); margin-bottom: 8px; padding-right: 48px; }
@@ -880,10 +882,10 @@
     <div class="mobile-menu__foot">
       <a class="btn btn--primary btn--block" href="#booking">Записаться на консультацию</a>
       <div class="mobile-menu__social">
-        <a class="icon-btn" data-link="wa" href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg class="i"><use href="#i-wa"/></svg></a>
-        <a class="icon-btn" data-link="tg" href="#" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
+        <a class="icon-btn" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg class="i"><use href="#i-wa"/></svg></a>
+        <a class="icon-btn" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
         <a class="icon-btn" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="i"><use href="#i-ig"/></svg></a>
-        <a class="icon-btn" data-link="tel" href="#" aria-label="Позвонить"><svg class="i"><use href="#i-phone"/></svg></a>
+        <a class="icon-btn" data-link="tel" hidden href="#" aria-label="Позвонить"><svg class="i"><use href="#i-phone"/></svg></a>
       </div>
     </div>
   </div>
@@ -1316,7 +1318,7 @@
             <h2 class="reveal" data-delay="1">Частые <em>вопросы</em></h2>
             <p class="reveal" data-delay="2">Не нашли ответ? Напишите мне — отвечу лично и подскажу, с чего начать.</p>
           </div>
-          <a class="btn btn--primary reveal" data-delay="3" data-link="wa" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg>Написать в WhatsApp</a>
+          <a class="btn btn--primary reveal" data-delay="3" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg>Написать в WhatsApp</a>
         </div>
 
         <div class="faq__list reveal">
@@ -1357,9 +1359,9 @@
             <h2>Запишитесь на <em>консультацию</em></h2>
             <p>Расскажите, что хотите изменить, — я свяжусь с вами, подберу удобное время и отвечу на все вопросы.</p>
             <div class="booking__contacts">
-              <a class="contact-chip" data-link="wa" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg><span><small>Быстрее всего</small><strong>Написать в WhatsApp</strong></span></a>
-              <a class="contact-chip" data-link="tg" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-tg"/></svg><span><small>Удобно в Telegram</small><strong>Написать в Telegram</strong></span></a>
-              <a class="contact-chip" data-link="tel" href="#"><svg class="i"><use href="#i-phone"/></svg><span><small>Позвонить</small><strong data-text="phoneDisplay">+7 (000) 000-00-00</strong></span></a>
+              <a class="contact-chip" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg><span><small>Быстрее всего</small><strong>Написать в WhatsApp</strong></span></a>
+              <a class="contact-chip" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-tg"/></svg><span><small>Удобно в Telegram</small><strong>Написать в Telegram</strong></span></a>
+              <a class="contact-chip" data-link="tel" hidden href="#"><svg class="i"><use href="#i-phone"/></svg><span><small>Позвонить</small><strong data-text="phone">+7 (000) 000-00-00</strong></span></a>
             </div>
           </div>
 
@@ -1413,7 +1415,7 @@
               <label class="check">
                 <input type="checkbox" name="consent" required>
                 <span class="check__box"><svg class="i"><use href="#i-check"/></svg></span>
-                <span>Соглашаюсь на обработку персональных данных (в том числе сведений о здоровье, если укажу их в комментарии) в соответствии с <a href="#privacy">политикой конфиденциальности</a></span>
+                <span>Соглашаюсь на обработку персональных данных (в том числе сведений о здоровье, если укажу их в комментарии) и их передачу выбранному мессенджеру в соответствии с <a href="#privacy">политикой конфиденциальности</a></span>
               </label>
               <span class="form__error" id="e-consent" aria-live="polite"></span>
 
@@ -1421,7 +1423,7 @@
               <!-- Кнопка включается скриптом: без JS форма не отправится и не «утечёт» в адресную строку -->
               <button class="btn btn--light btn--block" type="submit" disabled>Отправить заявку <svg class="i"><use href="#i-arrow"/></svg></button>
               <p class="form__hint">Заявка откроется в выбранном мессенджере — останется нажать «Отправить».</p>
-              <noscript><p class="form__hint">Онлайн-запись работает с включённым JavaScript. Пожалуйста, позвоните или напишите в мессенджер.</p></noscript>
+              <noscript><p class="form__hint">Онлайн-запись и контакты работают с включённым JavaScript. Без него меня можно найти в Instagram: @tsyrena.cosmetolog</p></noscript>
             </form>
 
             <div class="form__success" id="form-success" hidden>
@@ -1447,11 +1449,11 @@
           <ul class="contact-list reveal" data-delay="2">
             <li><span class="contact-list__icon"><svg class="i"><use href="#i-pin"/></svg></span><div><small>Адрес</small><strong data-text="address">г. Город, ул. Примерная, 1, кабинет 5</strong></div></li>
             <li><span class="contact-list__icon"><svg class="i"><use href="#i-clock"/></svg></span><div><small>Часы работы</small><strong data-text="hours">Пн–Сб: 10:00–20:00, по записи</strong></div></li>
-            <li><span class="contact-list__icon"><svg class="i"><use href="#i-phone"/></svg></span><div><small>Телефон</small><a data-link="tel" data-text="phoneDisplay" href="#">+7 (000) 000-00-00</a></div></li>
+            <li hidden><span class="contact-list__icon"><svg class="i"><use href="#i-phone"/></svg></span><div><small>Телефон</small><a data-link="tel" data-text="phone" href="#">+7 (000) 000-00-00</a></div></li>
           </ul>
           <div class="socials reveal" data-delay="3">
-            <a class="btn btn--ghost" data-link="wa" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg>WhatsApp</a>
-            <a class="btn btn--ghost" data-link="tg" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-tg"/></svg>Telegram</a>
+            <a class="btn btn--ghost" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg>WhatsApp</a>
+            <a class="btn btn--ghost" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-tg"/></svg>Telegram</a>
             <a class="btn btn--ghost" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-ig"/></svg>Instagram*</a>
           </div>
         </div>
@@ -1460,7 +1462,7 @@
           <div class="map__pin" aria-hidden="true"><div class="map__pin-dot"><span></span></div></div>
           <div class="map__card">
             <div><strong>Кабинет косметологии</strong><span data-text="address">г. Город, ул. Примерная, 1, кабинет 5</span></div>
-            <a class="btn btn--primary btn--sm" data-link="map" href="#" target="_blank" rel="noopener noreferrer">Построить маршрут</a>
+            <a class="btn btn--primary btn--sm" data-link="map" hidden href="#" target="_blank" rel="noopener noreferrer">Построить маршрут</a>
           </div>
         </div>
       </div>
@@ -1516,9 +1518,9 @@
         <div>
           <h4>Контакты</h4>
           <ul>
-            <li><a data-link="tel" data-text="phoneDisplay" href="#">+7 (000) 000-00-00</a></li>
-            <li><a data-link="wa" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
-            <li><a data-link="tg" href="#" target="_blank" rel="noopener noreferrer">Telegram</a></li>
+            <li hidden><a data-link="tel" data-text="phone" href="#">+7 (000) 000-00-00</a></li>
+            <li hidden><a data-link="wa" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+            <li hidden><a data-link="tg" href="#" target="_blank" rel="noopener noreferrer">Telegram</a></li>
             <li><a data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener noreferrer">Instagram*</a></li>
           </ul>
         </div>
@@ -1560,7 +1562,7 @@
       <p>Запись на консультацию или процедуру и связь с вами. Основание — ваше согласие (ст. 6 и 9 Федерального закона № 152-ФЗ «О персональных данных»), которое вы даёте, отмечая галочку в форме.</p>
 
       <h3>4. Как передаются данные</h3>
-      <p>Сайт не сохраняет заявку и не отправляет её на сервер. Сообщение формируется в вашем браузере и открывается в выбранном вами мессенджере — WhatsApp или Telegram; отправляете его вы сами. Эти сервисы могут обрабатывать данные за пределами РФ.</p>
+      <p>Сайт не сохраняет заявку и не отправляет её на свой сервер. Когда вы нажимаете «Отправить заявку», браузер открывает выбранный вами мессенджер — WhatsApp или Telegram — по ссылке, в которую уже подставлен текст заявки. В этот момент текст передаётся этому сервису и сохраняется в истории браузера. Доставить сообщение мне вы решаете сами, нажав «Отправить» в мессенджере. WhatsApp и Telegram могут обрабатывать данные за пределами РФ. Подробности о здоровье можно не писать в форме, а обсудить в переписке.</p>
       <p>При загрузке страницы браузер получает шрифты с серверов Google Fonts и передаёт им IP-адрес. Сайт не использует cookies и счётчики аналитики.</p>
 
       <h3>5. Срок хранения</h3>
@@ -1574,16 +1576,18 @@
   <!-- Нижняя панель записи на телефоне -->
   <div class="mbar" id="mbar">
     <a class="btn btn--primary" href="#booking">Записаться</a>
-    <a class="icon-btn" data-link="wa" href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg class="i"><use href="#i-wa"/></svg></a>
-    <a class="icon-btn" data-link="tg" href="#" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
+    <a class="icon-btn" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg class="i"><use href="#i-wa"/></svg></a>
+    <a class="icon-btn" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
   </div>
 
   <!-- =====================================================
        ✏️ КОНТАКТЫ — меняются только здесь и обновляются по всему сайту.
        Формат JSON: значения в двойных кавычках, без запятой после последней строки.
-       whatsapp — номер только цифрами, с 7 в начале: "79161234567"
-       telegram — username без @: "tsyrena_cosmetolog"
-       phone    — номер для звонка: "79161234567"
+       whatsapp  — номер только цифрами, с 7 в начале: "79161234567"
+       telegram  — username без @: "tsyrena_cosmetolog"
+       phone     — номер для звонка: "79161234567" (на сайте он сам покажется как +7 (916) 123-45-67)
+       instagram — имя профиля без @
+       Не используйте в значениях знак «меньше» — блок сломается.
        Пока поле пустое или заполнено неверно, его кнопки скрыты и заявки
        по этому каналу не отправляются.
        ===================================================== -->
@@ -1592,21 +1596,21 @@
     "whatsapp": "",
     "telegram": "",
     "phone": "",
-    "phoneDisplay": "+7 (000) 000-00-00",
     "instagram": "tsyrena.cosmetolog",
     "address": "г. Город, ул. Примерная, 1, кабинет 5",
     "hours": "Пн–Сб: 10:00–20:00, по записи"
   }
   </script>
 
-  <script>
+  <script data-csp>
     (() => {
       'use strict';
       const root = document.documentElement;
-      root.classList.add('reveal-on');
+      root.classList.add('app', 'reveal-on');
 
       const $ = (s, el = document) => el.querySelector(s);
       const $$ = (s, el = document) => Array.prototype.slice.call(el.querySelectorAll(s));
+      const has = (obj, k) => Object.prototype.hasOwnProperty.call(obj, k);
       // Каждый блок изолирован: ошибка в одном не ломает остальные (и форму записи)
       const run = (name, fn) => {
         try { fn(); return true; } catch (err) { console.error('[' + name + ']', err); return false; }
@@ -1619,66 +1623,87 @@
 
       /* ---------- Контакты ---------- */
       let CONFIG = {};
+      let configError = '';
       run('config', () => {
         const node = $('#site-config');
-        const data = node ? JSON.parse(node.textContent) : {};
-        if (data && typeof data === 'object') CONFIG = data;
+        if (!node) return;
+        try {
+          const data = JSON.parse(node.textContent);
+          if (data && typeof data === 'object' && !Array.isArray(data)) CONFIG = data;
+        } catch (err) {
+          configError = err.message;
+          console.error('site-config: ошибка в формате JSON — ' + err.message + '. Проверьте кавычки и запятые.');
+        }
       });
-      const str = v => (typeof v === 'string' ? v.trim() : '');
+      const str = v => (typeof v === 'string' || typeof v === 'number' ? String(v).trim() : '');
+      const get = k => (has(CONFIG, k) ? str(CONFIG[k]) : '');
       const digits = v => String(v || '').replace(/\D/g, '');
-      const ruNumber = v => digits(str(v)).replace(/^8(?=\d{10}$)/, '7');
+      const ruNumber = v => digits(v).replace(/^8(?=\d{10}$)/, '7');
+      const fmtRu = d => '+7 (' + d.slice(1, 4) + ') ' + d.slice(4, 7) + '-' + d.slice(7, 9) + '-' + d.slice(9, 11);
 
-      const wa = ruNumber(CONFIG.whatsapp);
-      const tg = str(CONFIG.telegram).replace(/^(?:https?:\/\/)?t\.me\//i, '').replace(/^@/, '');
-      const tel = ruNumber(CONFIG.phone);
-      const ig = str(CONFIG.instagram).replace(/^@/, '');
-      const address = str(CONFIG.address);
+      const wa = ruNumber(get('whatsapp'));
+      const tg = get('telegram').replace(/^(?:https?:\/\/)?(?:www\.)?t\.me\//i, '').replace(/^@/, '').replace(/[/?#].*$/, '');
+      const tel = ruNumber(get('phone'));
+      const ig = get('instagram').replace(/^(?:https?:\/\/)?(?:www\.)?instagram\.com\//i, '').replace(/[/?#].*$/, '').replace(/^@/, '');
+      const addressNode = $('[data-text="address"]');
+      const address = get('address') || (addressNode ? addressNode.textContent.trim() : '');
 
-      // Канал включается, только если значение похоже на настоящее — иначе он скрыт (fail-closed)
-      const OK = {
+      // Канал включается, только если значение похоже на настоящее — иначе его кнопки скрыты (fail-closed)
+      const OK = Object.freeze({
         wa: /^7[3489]\d{9}$/.test(wa),
         tg: /^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(tg) && !/^your_?telegram$/i.test(tg),
         tel: /^7[3489]\d{9}$/.test(tel),
         ig: /^[A-Za-z0-9._]{1,30}$/.test(ig),
         map: address.length > 0,
-      };
-      const LINKS = {
+      });
+      const isOn = k => has(OK, k) && OK[k] === true;
+      const LINKS = Object.freeze({
         wa: 'https://wa.me/' + wa,
         tg: 'https://t.me/' + tg,
         tel: 'tel:+' + tel,
         ig: 'https://www.instagram.com/' + ig + '/',
         map: 'https://yandex.ru/maps/?text=' + encodeURIComponent(address),
-      };
+      });
+      const hasMessenger = isOn('wa') || isOn('tg');
 
       run('links', () => {
         $$('[data-link]').forEach(a => {
           const key = a.dataset.link;
-          if (OK[key]) { a.href = LINKS[key]; return; }
+          const box = a.closest('li') || a;
+          if (isOn(key)) { a.href = LINKS[key]; box.hidden = false; return; }
+          if (key === 'ig') return; // ссылка из разметки остаётся рабочей
           a.removeAttribute('href');
-          (a.closest('li') || a).hidden = true;
+          box.hidden = true;
         });
         ['wa', 'tg'].forEach(key => {
-          if (OK[key]) return;
+          if (isOn(key)) return;
           const radio = $('input[name="via"][value="' + key + '"]');
           if (radio) { radio.checked = false; radio.disabled = true; radio.closest('.pill').hidden = true; }
         });
         const firstOn = $('input[name="via"]:not(:disabled)');
         if (firstOn && !$('input[name="via"]:checked')) firstOn.checked = true;
-        if (!OK.wa && !OK.tg) { const via = $('#f-via'); if (via) via.hidden = true; }
 
-        $$('[data-text]').forEach(el => { const v = str(CONFIG[el.dataset.text]); if (v) el.textContent = v; });
+        const texts = { phone: isOn('tel') ? fmtRu(tel) : '', address: get('address'), hours: get('hours') };
+        $$('[data-text]').forEach(el => {
+          const k = el.dataset.text;
+          const v = has(texts, k) ? texts[k] : '';
+          if (v) el.textContent = v;
+        });
         const year = $('#year');
         if (year) year.textContent = String(new Date().getFullYear());
 
-        const missing = [['wa', 'WhatsApp'], ['tg', 'Telegram'], ['tel', 'телефон']].filter(([k]) => !OK[k]).map(([, label]) => label);
-        if (!missing.length) return;
-        console.warn('site-config: не заполнены или неверны — ' + missing.join(', ') + '. Эти кнопки скрыты.');
+        const missing = [['wa', 'WhatsApp'], ['tg', 'Telegram'], ['tel', 'телефон'], ['ig', 'Instagram']]
+          .filter(([k]) => !isOn(k)).map(([, label]) => label);
+        const problem = configError
+          ? 'в блоке site-config ошибка JSON (' + configError + ') — проверьте кавычки и запятые'
+          : missing.length ? 'заполните в блоке site-config: ' + missing.join(', ') + ' — пока они пустые или неверные, их кнопки скрыты' : '';
+        if (!problem) return;
+        console.warn('site-config: ' + problem);
         // Подсказка видна только при просмотре файла на своём компьютере, посетители сайта её не увидят
         if (/^(file:|https?:\/\/(localhost|127\.0\.0\.1)[:/])/.test(location.href)) {
           const note = document.createElement('div');
           note.className = 'dev-note';
-          note.textContent = '⚠️ Видно только вам: заполните в блоке site-config — ' + missing.join(', ') +
-            '. Пока они пустые, эти кнопки скрыты. (Нажмите, чтобы скрыть подсказку.)';
+          note.textContent = '⚠️ Видно только вам: ' + problem + '. (Нажмите, чтобы скрыть.)';
           note.addEventListener('click', () => note.remove());
           document.body.append(note);
         }
@@ -1721,7 +1746,10 @@
           update();
         };
         burger.addEventListener('click', () => toggle(!isOpen()));
-        $$('a', menu).forEach(a => a.addEventListener('click', () => toggle(false)));
+        // Любая ссылка (в меню, логотип, «Записаться» в шапке) закрывает открытое меню
+        document.addEventListener('click', e => {
+          if (isOpen() && e.target.closest && e.target.closest('a')) toggle(false);
+        });
         document.addEventListener('keydown', e => {
           if (e.key === 'Escape' && isOpen()) { toggle(false); burger.focus(); }
         });
@@ -1731,7 +1759,9 @@
       /* ---------- Появление при прокрутке ---------- */
       const revealOk = run('reveal', () => {
         const items = $$('.reveal');
-        if (!('IntersectionObserver' in window)) { items.forEach(el => el.classList.add('is-in')); return; }
+        // Скрипт пришёл поздно — запасная анимация уже могла показать блоки, не прячем их снова
+        const late = window.performance && performance.now() > 1400;
+        if (late || !('IntersectionObserver' in window)) { items.forEach(el => el.classList.add('is-in')); return; }
         const io = new IntersectionObserver(entries => {
           entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } });
         }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
@@ -1815,17 +1845,28 @@
       run('privacy', () => {
         const dlg = $('#privacy');
         if (!dlg || typeof dlg.showModal !== 'function') return;
-        $$('a[href="#privacy"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); dlg.showModal(); }));
-        $$('[data-close]', dlg).forEach(b => b.addEventListener('click', e => { e.preventDefault(); dlg.close(); }));
-        dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+        const clearHash = () => {
+          if (location.hash === '#privacy' && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+        };
+        const open = () => { clearHash(); if (!dlg.open) dlg.showModal(); };
+        $$('a[href="#privacy"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); open(); }));
+        $$('[data-close]', dlg).forEach(b => b.addEventListener('click', e => { if (dlg.open) { e.preventDefault(); dlg.close(); } }));
+        // Закрываем по клику на подложку, только если и нажатие началось на ней (выделение текста не закрывает окно)
+        let downOnBackdrop = false;
+        dlg.addEventListener('pointerdown', e => { downOnBackdrop = e.target === dlg; });
+        dlg.addEventListener('click', e => { if (e.target === dlg && downOnBackdrop) dlg.close(); });
+        window.addEventListener('hashchange', () => { if (location.hash === '#privacy') open(); });
+        if (location.hash === '#privacy') open();
       });
 
-      /* ---------- Маска телефона ---------- */
+      /* ---------- Телефон: маска и проверка ---------- */
       // Российские номера → +7 (XXX) XXX-XX-XX; номер, начатый с «+» и другого кода страны, — без маски
       const formatPhone = raw => {
-        let d = digits(raw);
-        if (!d) return /^\s*\+/.test(raw) ? '+' : '';
-        if (/^\s*\+/.test(raw) && d[0] !== '7') return '+' + d.slice(0, 15);
+        const s = String(raw || '');
+        const plus = /^\s*\+/.test(s);
+        let d = digits(s);
+        if (!d) return plus ? '+' : '';
+        if (plus && d[0] !== '7') return '+' + d.slice(0, 15);
         if (d[0] === '8') d = '7' + d.slice(1);
         else if (d[0] !== '7') d = '7' + d;
         d = d.slice(0, 11);
@@ -1837,26 +1878,41 @@
         if (d.length > 9) out += '-' + d.slice(9, 11);
         return out;
       };
-      const phoneValid = v => {
+      const phoneValid = raw => {
+        const v = formatPhone(raw);
         const d = digits(v);
-        if (/^\s*\+/.test(v) && d[0] !== '7') return d.length >= 10 && d.length <= 15;
-        return /^7[3489]\d{9}$/.test(d);
+        if (d[0] !== '7') return /^[1-9]\d{9,14}$/.test(d);
+        return /^7[3-9]\d{9}$/.test(d); // Россия и Казахстан
       };
 
       run('phone-mask', () => {
         const phone = $('#f-phone');
         if (!phone) return;
         let prev = phone.value;
-        phone.addEventListener('input', e => {
+        const onInput = e => {
+          if (e && e.isComposing) return;
+          const type = (e && e.inputType) || '';
+          const deleting = type.indexOf('delete') === 0;
+          const wasRu = /^\+7/.test(prev);
+          const wasIntl = /^\+[0-689]/.test(prev);
           let v = phone.value;
           let caret = phone.selectionStart == null ? v.length : phone.selectionStart;
-          // Backspace по скобке/дефису: вместе с ним удаляем и цифру перед ним
-          if (e.inputType === 'deleteContentBackward' && digits(v) === digits(prev) && v.length < prev.length) {
-            const head = v.slice(0, caret).replace(/\d(?=\D*$)/, '');
-            v = head + v.slice(caret);
-            caret = head.length;
+
+          // Backspace по скобке/дефису: вместе с ним удаляем цифру перед ним (но не код страны 7)
+          if (type === 'deleteContentBackward' && digits(v) === digits(prev) && v.length < prev.length) {
+            const head = v.slice(0, caret);
+            if (!(wasRu && digits(head).length <= 1)) {
+              const cut = head.replace(/\d(?=\D*$)/, '');
+              v = cut + v.slice(caret);
+              caret = cut.length;
+            }
           }
-          const before = digits(v.slice(0, caret)).length;
+          let before = digits(v.slice(0, caret)).length;
+          // При удалении код страны не теряется: российский номер не превращается в иностранный и наоборот
+          if (deleting && digits(v)) {
+            if (wasRu && !/^\s*\+?\s*7/.test(v)) { v = '+7' + v.replace(/^\s*\+?/, ''); before += 1; }
+            else if (wasIntl && !/^\s*\+/.test(v)) v = '+' + v;
+          }
           const out = formatPhone(v);
           const added = Math.max(0, digits(out).length - digits(v).length); // ведущая 7, добавленная маской
           const target = Math.min(before + added, digits(out).length);
@@ -1868,7 +1924,11 @@
           phone.value = out;
           prev = out;
           if (document.activeElement === phone) phone.setSelectionRange(pos, pos);
-        });
+        };
+        phone.addEventListener('input', onInput);
+        phone.addEventListener('compositionend', () => onInput(null));
+        // Автозаполнение иногда присылает только change
+        phone.addEventListener('change', () => { phone.value = formatPhone(phone.value); prev = phone.value; });
       });
 
       /* ---------- Заявка → мессенджер ---------- */
@@ -1884,6 +1944,18 @@
         const successLink = $('#success-link');
         const successText = $('#success-text');
         const successTitle = $('#success-title');
+        const via = $('#f-via');
+
+        if (!hasMessenger) {
+          // Мессенджеров нет — форма честно выключена, а не отказывает после заполнения
+          if (via) { via.hidden = true; via.parentElement.classList.add('form__row--one'); }
+          $$('input, select, textarea, button', form).forEach(el => { el.disabled = true; });
+          form.classList.add('is-off');
+          const hint = $('.form__hint', form);
+          if (hint) hint.textContent = 'Онлайн-запись временно недоступна — ' +
+            (isOn('tel') ? 'позвоните: ' + fmtRu(tel) : 'напишите мне в Instagram') + '.';
+          return;
+        }
 
         // Управляющие, невидимые и «переворачивающие» текст символы — убираем
         const JUNK = /[\u0000-\u0008\u000B-\u001F\u007F­​-‏‪-‮⁠-⁤⁦-⁩﻿]/g;
@@ -1917,8 +1989,8 @@
           if (!phoneOk) { phone.focus(); return; }
           if (!consent) { f.consent.focus(); return; }
 
-          const via = pickChannel();
-          if (!via || !OK[via]) {
+          const channel = pickChannel();
+          if (!isOn(channel) || (channel !== 'wa' && channel !== 'tg')) {
             if (formError) formError.textContent = 'Онлайн-запись пока недоступна — пожалуйста, позвоните или напишите в Instagram.';
             return;
           }
@@ -1927,19 +1999,19 @@
           const text = [
             'Здравствуйте, Цырена! Хочу записаться.',
             'Имя: ' + name,
-            'Телефон: ' + oneLine(phone.value, 24),
+            'Телефон: ' + formatPhone(phone.value),
             'Процедура: ' + oneLine(f.service.value, 80),
             'Удобное время: ' + oneLine(f.time.value, 40),
             comment && 'Комментарий: ' + comment,
           ].filter(Boolean).join('\n');
-          const url = LINKS[via] + '?text=' + encodeURIComponent(text);
+          const url = LINKS[channel] + '?text=' + encodeURIComponent(text);
 
           // Без 'noopener', чтобы узнать, открылось ли окно; связь с нашей вкладкой сразу обрываем
           let win = null;
           try { win = window.open(url, '_blank'); } catch (err) { win = null; }
           if (win) { try { win.opener = null; } catch (err) { /* окно другого источника */ } }
 
-          const app = via === 'tg' ? 'Telegram' : 'WhatsApp';
+          const app = channel === 'tg' ? 'Telegram' : 'WhatsApp';
           successLink.href = url;
           successLink.firstElementChild.textContent = 'Открыть ' + app;
           successText.textContent = win
