@@ -1,0 +1,10 @@
+# Заголовки безопасности для Netlify / Cloudflare Pages (файл должен лежать рядом с index.html).
+# Основная CSP (хеши скриптов) — в <meta> внутри index.html; здесь только то, что meta не умеет.
+/*
+  Content-Security-Policy: frame-ancestors 'none'; base-uri 'none'; object-src 'none'; form-action 'none'
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
