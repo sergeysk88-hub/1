@@ -1,4 +1,5 @@
-// Подтягивает с Авито отзывы, рейтинг, цены объявлений и контакты и вписывает их в index.html.
+// Привязывает профиль Авито к сайту: вписывает в index.html отзывы, рейтинг, объявления
+// с ценами и контакты из официального API Авито.
 //
 // Запуск из корня проекта (Node.js 20.6+):
 //   node --env-file=.env tools/avito-sync.mjs            — обновить index.html
@@ -9,23 +10,28 @@
 // Ключи выдаются в личном кабинете Авито: https://www.avito.ru/professionals/api
 //
 // Что обновляется:
-//  • отзывы — между метками <!-- avito:reviews --> и <!-- /avito:reviews -->,
-//    рейтинг — между <!-- avito:rating --> и <!-- /avito:rating -->;
-//  • цены — у элемента с атрибутом data-avito-item="номер или ссылка объявления"
-//    меняется число перед «₽» («от» и «/ ед.» остаются);
-//  • контакты — в site-config заполняются пустые phone, avito и address
-//    (значения, вписанные вручную, не трогаются — см. OVERWRITE_CONTACTS).
+//  • отзывы с ответами на них — между метками <!-- avito:reviews --> и <!-- /avito:reviews -->,
+//    рейтинг — между <!-- avito:rating -->, список всех объявлений с ценами — между <!-- avito:items -->;
+//  • цены в карточках услуг: карточка сама привязывается к объявлению с тем же названием
+//    (в ценник записывается data-avito-item="номер"), дальше меняется число перед «₽».
+//    Номер можно поставить и вручную, а data-avito-item="нет" запрещает привязку карточки;
+//  • контакты — пустые phone, avito и address в site-config, телефон, адрес и ссылка
+//    на профиль в микроразметке JSON-LD (вписанное вручную не трогается — см. OVERWRITE_CONTACTS).
 //
 // Браузер посетителя к Авито не обращается: данные вписываются в HTML заранее,
 // поэтому ключи не попадают на сайт, а CSP (connect-src 'none') остаётся строгой.
 // Если запрос к какому-то разделу не удался, этот блок сайта остаётся прежним.
+// Описаний и фото объявлений в API Авито нет — их на сайте нужно вести вручную.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 // ✏️ Настройки
-const MAX_REVIEWS = 12;           // сколько отзывов показать на сайте
+const MAX_REVIEWS = 30;           // сколько отзывов показать (остальные — по кнопке «Все отзывы на Авито»)
 const MIN_SCORE = 4;              // отзывы с оценкой ниже не показываются (1 — показывать все)
 const MIN_TEXT = 15;              // отзывы без текста или короче — пропускаются
 const MAX_TEXT = 360;             // длинный текст отзыва обрезается (чтобы карточки не растягивались)
+const SHOW_ANSWERS = true;        // показывать опубликованные ответы на отзывы
+const ANSWER_TITLE = 'Ответ Цырены';
+const AUTO_LINK = true;           // привязывать карточки услуг к объявлениям с тем же названием
 const OVERWRITE_CONTACTS = false; // true — телефон, ссылка и адрес с Авито заменяют вписанные вручную
 
 const API = 'https://api.avito.ru';
@@ -63,12 +69,14 @@ const fmtPrice = n => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' '
 
 // Номер объявления: «4123456789» или ссылка …/botoks_4123456789?context=…
 const itemId = ref => (String(ref).replace(/[?#].*$/, '').match(/(\d{6,})\D*$/) || [])[1] || '';
+const optedOut = ref => /^\s*(нет|no|-)\s*$/i.test(String(ref));
 const normPhone = v => {
   const d = String(v || '').replace(/\D/g, '').replace(/^8(?=\d{10}$)/, '7');
   return /^7[3489]\d{9}$/.test(d) ? d : '';
 };
-const normProfile = v => {
-  const s = clean(v, 300).replace(/^http:\/\//i, 'https://');
+const avitoUrl = (v, keepQuery) => {
+  let s = clean(v, 500).replace(/^http:\/\//i, 'https://');
+  if (!keepQuery) s = s.replace(/[?#].*$/, '');
   return /^https:\/\/(?:www\.|m\.)?avito\.ru\/[A-Za-z0-9_\-./?=&%]+$/.test(s) ? s : '';
 };
 
@@ -117,10 +125,11 @@ async function fetchItems(token) {
   for (let page = 1; page <= 20; page++) {
     const data = await request(`/core/v1/items?status=active&per_page=50&page=${page}`, { token });
     const list = Array.isArray(data && data.resources) ? data.resources : [];
-    out.push(...list);
+    out.push(...list.filter(it => it && itemId(it.id)));
     if (list.length < 50) break;
   }
-  return out;
+  // Порядок от API может меняться — сортируем, чтобы без изменений на Авито не менялся и сайт
+  return out.sort((a, b) => clean(a.title, 200).localeCompare(clean(b.title, 200), 'ru') || String(a.id).localeCompare(String(b.id)));
 }
 
 /* ---------- Обновление index.html ---------- */
@@ -130,15 +139,63 @@ function region(html, name, inner) {
   return html.replace(re, (m, open, close) => open + (inner ? '\n' + inner : '') + close);
 }
 
+const CARD = /<article class="card">[\s\S]*?<\/article>/g;
+const cardInfo = card => {
+  const title = card.match(/class="card__title">([^<]*)</);
+  const ref = card.match(/\bdata-avito-item="([^"]*)"/);
+  return { title: title ? unesc(title[1]).trim() : '', ref: ref ? ref[1] : null };
+};
+
 // Номер объявления → название процедуры в карточке, к которой оно привязано
 function cardTitles(html) {
   const titles = new Map();
-  for (const [card] of html.replace(/<!--[\s\S]*?-->/g, '').matchAll(/<article class="card">[\s\S]*?<\/article>/g)) {
-    const title = card.match(/class="card__title">([^<]*)</);
-    const ref = card.match(/\bdata-avito-item="([^"]*)"/);
-    if (title && ref && itemId(ref[1])) titles.set(itemId(ref[1]), unesc(title[1]).trim());
+  for (const [card] of html.replace(/<!--[\s\S]*?-->/g, '').matchAll(CARD)) {
+    const { title, ref } = cardInfo(card);
+    if (title && ref && itemId(ref)) titles.set(itemId(ref), title);
   }
   return titles;
+}
+
+// Совпадение названий без учёта регистра, знаков и окончаний:
+// «Химические пилинги» ↔ «Пилинг химический», «Контурная пластика губ» ↔ «Контурная пластика губ, гиалурон»
+const norm = s => unesc(String(s)).toLowerCase().replace(/ё/g, 'е').replace(/[^a-zа-я0-9]+/g, ' ').trim();
+const words = s => norm(s).split(' ').filter(w => w.length >= 3);
+const stem = w => (w.length <= 4 ? w.slice(0, 3) : w.slice(0, Math.max(4, w.length - 2)));
+const sameWord = (a, b) => b.startsWith(stem(a)) || a.startsWith(stem(b));
+const titleFits = (card, ad) => {
+  const cw = words(card);
+  const aw = words(ad);
+  return cw.length > 0 && cw.every(c => aw.some(a => sameWord(c, a)));
+};
+
+// Карточка привязывается, только если ей подходит ровно одно объявление и это объявление
+// не подходит другим карточкам (точное совпадение названия важнее частичного)
+function autoLink(html, items, report) {
+  const cards = [...html.replace(/<!--[\s\S]*?-->/g, '').matchAll(CARD)].map(([card]) => cardInfo(card));
+  const taken = new Set(cards.filter(c => c.ref !== null).map(c => itemId(c.ref)).filter(Boolean));
+  const free = items.filter(it => !taken.has(String(it.id)));
+  const candidates = new Map();
+  for (const c of cards) {
+    if (c.ref !== null || !c.title) continue;
+    const exact = free.filter(it => norm(it.title) === norm(c.title));
+    const list = exact.length ? exact : free.filter(it => titleFits(c.title, it.title));
+    if (list.length) candidates.set(c.title, list);
+  }
+  const claims = new Map();
+  for (const list of candidates.values()) if (list.length === 1) claims.set(String(list[0].id), (claims.get(String(list[0].id)) || 0) + 1);
+  const links = new Map();
+  for (const [title, list] of candidates) {
+    if (list.length === 1 && claims.get(String(list[0].id)) === 1) links.set(title, list[0]);
+    else console.log(`  «${title}»: подходят несколько объявлений (${list.map(it => it.id).join(', ')}) — укажите нужное в data-avito-item`);
+  }
+  if (!links.size) return html;
+  return withoutComments(html, masked => masked.replace(CARD, card => {
+    const { title, ref } = cardInfo(card);
+    const it = ref === null && links.get(title);
+    if (!it || !/<p class="price"/.test(card)) return card;
+    report.push(`карточка «${title}» привязана к объявлению ${it.id} «${clean(it.title, 60)}»`);
+    return card.replace(/<p class="price"/, `<p class="price" data-avito-item="${esc(String(it.id))}"`);
+  }));
 }
 
 function reviewHtml(r, titles) {
@@ -148,15 +205,18 @@ function reviewHtml(r, titles) {
   const item = r.item || {};
   const service = titles.get(String(item.id)) || clean(item.title, 48);
   const meta = [service, monthYear(r.createdAt)].filter(Boolean).join(' · ') || 'Отзыв на Авито';
+  const a = r.answer;
+  const answer = SHOW_ANSWERS && a && (!a.status || a.status === 'published') ? clean(a.text, MAX_TEXT) : '';
   return [
     '          <article class="review">',
     '            <div class="review__quote" aria-hidden="true">“</div>',
     '            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>',
     `            <div class="stars" role="img" aria-label="Оценка ${score} из 5">${stars(score)}</div>`,
     `            <p class="review__text">${esc(clean(r.text, MAX_TEXT))}</p>`,
+    answer && `            <p class="review__answer"><strong>${esc(ANSWER_TITLE)}</strong>${esc(answer)}</p>`,
     `            <div class="review__author"><span class="avatar">${esc(Array.from(name)[0].toUpperCase())}</span><div><strong>${esc(name)}</strong><span>${esc(meta)}</span></div></div>`,
     '          </article>',
-  ].join('\n');
+  ].filter(Boolean).join('\n');
 }
 
 function ratingHtml(info) {
@@ -169,11 +229,32 @@ function ratingHtml(info) {
     `<span><strong>${value}</strong> из 5 · ${count} ${plural(count, ['отзыв', 'отзыва', 'отзывов'])} на Авито</span></p>`;
 }
 
+// Все активные объявления — раскрывающийся список под карточками услуг
+function itemsHtml(items) {
+  const rows = items.map(it => {
+    const title = esc(clean(it.title, 120) || 'Объявление ' + it.id);
+    const url = avitoUrl(it.url);
+    const name = url ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : `<span>${title}</span>`;
+    const price = Number(it.price) > 0 ? `${fmtPrice(it.price)} ₽` : 'по запросу';
+    return `            <li>${name}<strong>${price}</strong></li>`;
+  });
+  if (!rows.length) return '';
+  return [
+    '        <details class="avito-list">',
+    `          <summary><svg class="i"><use href="#i-avito"/></svg>Все услуги и цены на Авито<span>${rows.length}</span></summary>`,
+    '          <ul>',
+    ...rows,
+    '          </ul>',
+    '        </details>',
+  ].join('\n');
+}
+
 function updatePrices(html, items, titles, report) {
   const byId = new Map(items.map(it => [String(it.id), it]));
   return withoutComments(html, masked => masked.replace(
     /(<([a-z][a-z0-9]*)\b[^>]*?\bdata-avito-item="([^"]*)"[^>]*>)([\s\S]*?)(<\/\2>)/gi,
     (m, open, tag, ref, inner, close) => {
+      if (optedOut(ref)) return m;
       const id = itemId(ref);
       if (!id) { warn(`data-avito-item="${ref}" — это не номер и не ссылка объявления`); return m; }
       const label = titles.get(id) || id;
@@ -181,7 +262,7 @@ function updatePrices(html, items, titles, report) {
       if (!item) { warn(`${label}: объявление ${id} не найдено среди активных — цена не изменена`); return m; }
       const price = Number(item.price);
       if (!(price > 0)) { warn(`${label}: в объявлении ${id} не указана цена — цена не изменена`); return m; }
-      const num = /\d(?:[\d   ]*\d)?(?=\s*(?:&nbsp;)?₽)/;
+      const num = /\d(?:[\d\s]*\d)?(?=\s*(?:&nbsp;)?₽)/;
       const old = inner.match(num);
       if (!old) { warn(`${label}: в ценнике нет числа перед «₽» — цена не изменена`); return m; }
       const next = fmtPrice(price);
@@ -190,37 +271,72 @@ function updatePrices(html, items, titles, report) {
     }));
 }
 
-function updateContacts(html, profile, items, report) {
-  const re = /(<script type="application\/json" id="site-config">)([\s\S]*?)(<\/script>)/;
-  const m = html.match(re);
-  if (!m) { warn('блок site-config не найден — контакты не обновлены'); return html; }
-  let cfg;
-  try { cfg = JSON.parse(m[2]); } catch (err) { warn(`в site-config ошибка JSON (${err.message}) — контакты не обновлены`); return html; }
-  if (!cfg || typeof cfg !== 'object' || Array.isArray(cfg)) { warn('site-config не является объектом — контакты не обновлены'); return html; }
-
+// Контакты с Авито: первый подтверждённый телефон, ссылка на профиль, адрес первого объявления с адресом
+function contactsFrom(profile, items) {
   const phones = profile ? [profile.phone].concat(Array.isArray(profile.phones) ? profile.phones : []) : [];
-  const withAddress = (items || []).find(it => clean(it && it.address, 200));
-  const found = {
+  const withAddress = (items || []).find(it => clean(it.address, 200));
+  return {
     phone: phones.map(normPhone).find(Boolean) || '',
-    avito: normProfile(profile && profile.profile_url),
+    avito: avitoUrl(profile && profile.profile_url, true),
     address: withAddress ? clean(withAddress.address, 160) : '',
   };
+}
+
+// Блок JSON внутри <script>: «<» мог бы закрыть блок — экранируем; отступы — как в файле
+const jsonBlock = obj => '\n  ' + JSON.stringify(obj, null, 2).replace(/</g, '\\u003c').replace(/\n/g, '\n  ') + '\n  ';
+function editJson(html, re, label, edit) {
+  const m = html.match(re);
+  if (!m) { warn(`блок ${label} не найден — не обновлён`); return html; }
+  let obj;
+  try { obj = JSON.parse(m[2]); } catch (err) { warn(`в ${label} ошибка JSON (${err.message}) — не обновлён`); return html; }
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) { warn(`${label} не является объектом — не обновлён`); return html; }
+  return edit(obj) ? html.replace(re, (all, open, body, close) => open + jsonBlock(obj) + close) : html;
+}
+
+function updateContacts(html, found, report) {
   const PLACEHOLDER = { address: /Примерная/ };
-  const same = (k, a, b) => (k === 'phone' ? normPhone(a) === b : a === b);
-  let changed = false;
-  for (const [k, v] of Object.entries(found)) {
-    if (!v) continue;
-    const cur = typeof cfg[k] === 'string' || typeof cfg[k] === 'number' ? String(cfg[k]).trim() : '';
-    const blank = !cur || (PLACEHOLDER[k] && PLACEHOLDER[k].test(cur));
-    if (same(k, cur, v) || (!blank && !OVERWRITE_CONTACTS)) continue;
-    cfg[k] = v;
-    changed = true;
-    report.push(`site-config ${k}: ${cur || '(пусто)'} → ${v}`);
-  }
-  if (!changed) return html;
-  // «<» внутри <script> мог бы закрыть блок — экранируем
-  const json = JSON.stringify(cfg, null, 2).replace(/</g, '\\u003c').replace(/\n/g, '\n  ');
-  return html.replace(re, (all, open, body, close) => `${open}\n  ${json}\n  ${close}`);
+  return editJson(html, /(<script type="application\/json" id="site-config">)([\s\S]*?)(<\/script>)/, 'site-config', cfg => {
+    let changed = false;
+    for (const [k, v] of Object.entries(found)) {
+      if (!v) continue;
+      const cur = typeof cfg[k] === 'string' || typeof cfg[k] === 'number' ? String(cfg[k]).trim() : '';
+      const blank = !cur || (PLACEHOLDER[k] && PLACEHOLDER[k].test(cur));
+      if ((k === 'phone' ? normPhone(cur) === v : cur === v) || (!blank && !OVERWRITE_CONTACTS)) continue;
+      cfg[k] = v;
+      changed = true;
+      report.push(`site-config ${k}: ${cur || '(пусто)'} → ${v}`);
+    }
+    return changed;
+  });
+}
+
+// Микроразметка для поисковиков: телефон и адрес заменяются, если там заглушка; профиль добавляется в sameAs
+function updateJsonLd(html, found, report) {
+  return editJson(html, /(<script type="application\/ld\+json">)([\s\S]*?)(<\/script>)/, 'JSON-LD', ld => {
+    let changed = false;
+    const tel = found.phone && '+' + found.phone;
+    if (tel && ld.telephone !== tel && (OVERWRITE_CONTACTS || !normPhone(ld.telephone))) {
+      report.push(`JSON-LD telephone: ${ld.telephone || '(пусто)'} → ${tel}`);
+      ld.telephone = tel;
+      changed = true;
+    }
+    const addr = ld.address && typeof ld.address === 'object' ? ld.address : {};
+    const placeholder = !ld.address || /Примерная/.test(String(addr.streetAddress || '')) || addr.addressLocality === 'Город';
+    if (found.address && addr.streetAddress !== found.address && (OVERWRITE_CONTACTS || placeholder)) {
+      report.push(`JSON-LD address: ${addr.streetAddress || '(пусто)'} → ${found.address}`);
+      ld.address = { '@type': 'PostalAddress', streetAddress: found.address };
+      changed = true;
+    }
+    if (found.avito) {
+      const same = Array.isArray(ld.sameAs) ? ld.sameAs : ld.sameAs ? [ld.sameAs] : [];
+      if (!same.includes(found.avito)) {
+        ld.sameAs = same.filter(u => !/^https:\/\/(?:www\.|m\.)?avito\.ru\//.test(u)).concat(found.avito);
+        report.push(`JSON-LD sameAs: + ${found.avito}`);
+        changed = true;
+      }
+    }
+    return changed;
+  });
 }
 
 /* ---------- Запуск ---------- */
@@ -259,34 +375,35 @@ if (failed === 4) fail('ни один раздел API Авито не отве�
 const before = readFileSync(file, 'utf8');
 let html = before;
 const report = [];
+const step = (next, line) => { if (next !== html && line) report.push(line); html = next; };
+
+if (items) {
+  console.log(`\nАктивные объявления на Авито: ${items.length}`);
+  if (AUTO_LINK) html = autoLink(html, items, report);
+}
 const titles = cardTitles(html);
 
 if (reviews) {
-  if (reviews.length) {
-    const next = region(html, 'reviews', reviews.map(r => reviewHtml(r, titles)).join('\n'));
-    if (next !== html) report.push(`отзывы: ${reviews.length} шт. (оценка от ${MIN_SCORE}, с текстом)`);
-    html = next;
-  } else {
-    warn(`подходящих отзывов нет (нужна оценка от ${MIN_SCORE} и текст) — блок отзывов не изменён`);
-  }
+  if (reviews.length) step(region(html, 'reviews', reviews.map(r => reviewHtml(r, titles)).join('\n')), `отзывы: ${reviews.length} шт. (оценка от ${MIN_SCORE}, с текстом)`);
+  else warn(`подходящих отзывов нет (нужна оценка от ${MIN_SCORE} и текст) — блок отзывов не изменён`);
 }
 if (rating) {
-  const next = region(html, 'rating', ratingHtml(rating));
-  if (next !== html) report.push('рейтинг: ' + (ratingHtml(rating) ? `${Number(rating.rating.score).toFixed(1)} из 5, отзывов ${rating.rating.reviewsCount}` : 'скрыт (на Авито рейтинга пока нет)'));
-  html = next;
+  const r = ratingHtml(rating);
+  step(region(html, 'rating', r), 'рейтинг: ' + (r ? `${Number(rating.rating.score).toFixed(1)} из 5, отзывов ${rating.rating.reviewsCount}` : 'скрыт (на Авито рейтинга пока нет)'));
 }
 if (items) {
   html = updatePrices(html, items, titles, report);
-  if (items.length) {
-    console.log('\nАктивные объявления на Авито (номер · цена · название):');
-    for (const it of items) {
-      const mark = titles.has(String(it.id)) ? `  ✓ «${titles.get(String(it.id))}»` : '';
-      console.log(`  ${it.id} · ${Number(it.price) > 0 ? fmtPrice(it.price) + ' ₽' : 'без цены'} · ${clean(it.title, 70)}${mark}`);
-    }
-    if (!titles.size) console.log('  Чтобы цена на сайте бралась из объявления, добавьте ценнику data-avito-item="номер".');
+  step(region(html, 'items', itemsHtml(items)), `список услуг с Авито: ${items.length} шт.`);
+  for (const it of items) {
+    const mark = titles.has(String(it.id)) ? `  ✓ «${titles.get(String(it.id))}»` : '';
+    console.log(`  ${it.id} · ${Number(it.price) > 0 ? fmtPrice(it.price) + ' ₽' : 'без цены'} · ${clean(it.title, 70)}${mark}`);
   }
 }
-if (profile || items) html = updateContacts(html, profile, items, report);
+if (profile || items) {
+  const found = contactsFrom(profile, items);
+  html = updateContacts(html, found, report);
+  html = updateJsonLd(html, found, report);
+}
 
 console.log('');
 if (html === before) {
