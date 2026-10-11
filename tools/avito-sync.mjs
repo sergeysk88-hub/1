@@ -294,7 +294,8 @@ function editJson(html, re, label, edit) {
 }
 
 function updateContacts(html, found, report) {
-  const PLACEHOLDER = { address: /Примерная/ };
+  // Заглушки, которые заменяются данными с Авито; ссылка на отдельное объявление уступает ссылке на профиль
+  const PLACEHOLDER = { address: /Примерная/, avito: /_\d{6,}\/?$/ };
   return editJson(html, /(<script type="application\/json" id="site-config">)([\s\S]*?)(<\/script>)/, 'site-config', cfg => {
     let changed = false;
     for (const [k, v] of Object.entries(found)) {
