@@ -564,6 +564,8 @@
     .review__src .i { width: 16px; height: 16px; }
     .review__answer { margin: -12px 0 24px; padding: 12px 16px; border-left: 2px solid var(--blush); border-radius: 0 12px 12px 0; background: var(--cream); font-size: 14px; color: var(--muted); }
     .review__answer strong { display: block; margin-bottom: 2px; font-size: 12px; font-weight: 600; color: var(--ink-soft); }
+    /* Синхронизация с Авито не нашла подходящих отзывов — пустую ленту и стрелки не показываем */
+    #reviews:not(:has(.review)) .reviews__track, #reviews:not(:has(.review)) .slider-nav { display: none; }
     .reviews__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 24px; margin-top: 32px; }
     .reviews__rating { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 15px; color: var(--ink-soft); }
     .reviews__rating .stars { margin: 0; font-size: 16px; }
@@ -1013,7 +1015,8 @@
     <!-- ============ УСЛУГИ И ЦЕНЫ ============ -->
     <!-- ✏️ Цены и длительность — примерные, замените на свои.
          Цены с Авито: tools/avito-sync.mjs сам привязывает карточку к объявлению с тем же названием
-         и пишет в ценник data-avito-item="номер". Номер или ссылку объявления можно указать и вручную,
+         и пишет в ценник data-avito-item="номер" (кроме программ и цен «за единицу» — их привязывайте вручную).
+         Номер или ссылку объявления можно указать и вручную,
          например <p class="price" data-avito-item="4123456789">, а data-avito-item="нет" запрещает привязку.
          Меняется только число перед «₽», «от» и «/ ед.» остаются. -->
     <section class="section bg-cloud" id="services">
