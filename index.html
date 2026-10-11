@@ -15,6 +15,8 @@
   4. Отзывы — только реальные (например, со скриншотов из Instagram).
   5. Фото «до/после» — только с письменного согласия пациентов.
   6. Реквизиты, номер медицинской лицензии, текст политики (<dialog id="privacy">).
+  7. Авито: отзывы, цены и контакты подтягивает tools/avito-sync.mjs (см. README).
+     Блоки между метками avito:reviews и avito:rating он перезаписывает — не правьте их вручную.
 
   БЕЗОПАСНОСТЬ: в head задана Content-Security-Policy — браузер выполнит
   только два встроенных скрипта с атрибутом data-csp (по их sha256-хешам).
@@ -28,7 +30,7 @@
   <!-- Защита: браузер выполняет только скрипты с этими хешами (см. tools/update-csp.mjs),
        форма не может никуда «отправиться» сама (form-action 'none'), нельзя подменить <base>.
        frame-ancestors (защита от встраивания во фрейм) задаётся заголовком сервера — см. _headers / .htaccess -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-9VNcMZ737x0EKsYjPm+DM6WigY3xJ5WJqoHIQhcgyBs='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://yandex.ru https://*.yandex.ru; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-qEqCuAPa6EbKwjoZkkcmahUN5ubwVFIXOxuMKK0ovd0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://yandex.ru https://*.yandex.ru; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Цырена — косметолог | Эстетика и инъекции</title>
@@ -532,7 +534,7 @@
     }
     .reviews__track::-webkit-scrollbar { display: none; }
     .review {
-      scroll-snap-align: start;
+      position: relative; scroll-snap-align: start;
       display: flex; flex-direction: column;
       padding: 32px; border-radius: var(--r); background: #fff; border: 1px solid var(--line);
     }
@@ -544,6 +546,12 @@
     .review:nth-child(3n) .avatar { background: var(--blush); }
     .review__author strong { display: block; font-size: 15px; }
     .review__author div > span { font-size: 13px; color: var(--muted); }
+    .review__src { position: absolute; top: 30px; right: 30px; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--muted); }
+    .review__src .i { width: 16px; height: 16px; }
+    .reviews__foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 24px; margin-top: 32px; }
+    .reviews__rating { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 15px; color: var(--ink-soft); }
+    .reviews__rating .stars { margin: 0; font-size: 16px; }
+    .reviews__rating strong { font-family: var(--serif); font-size: 26px; font-weight: 600; line-height: 1; color: var(--ink); }
 
     /* ---------- FAQ ---------- */
     .faq__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
@@ -825,6 +833,7 @@
     <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-wa" viewBox="0 0 24 24"><path d="M20.5 11.7a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.3-4.4a8.5 8.5 0 1 1 15.7-4.4z"/><path d="M9.1 8.1c.3-.3.8-.2 1 .1l.9 1.8c.2.3.1.7-.2 1l-.5.5c.6 1.3 1.6 2.3 2.9 2.9l.5-.5c.3-.3.7-.4 1-.2l1.8.9c.3.2.4.7.1 1-.8 1-2.2 1.3-3.4.8-2.2-.9-3.9-2.6-4.8-4.8-.5-1.2-.2-2.6.7-3.5z" fill="currentColor" stroke="none"/></symbol>
     <symbol id="i-tg" viewBox="0 0 24 24"><path d="M21.5 3.5L2.8 10.7c-.9.4-.9 1.6.1 1.9l4.6 1.5 1.8 5.6c.2.7 1.1.9 1.6.4l2.6-2.5 4.8 3.5c.6.4 1.4.1 1.6-.6L22.9 4.9c.3-.9-.6-1.7-1.4-1.4z"/><path d="M7.5 14.1L18 7.2l-7.7 7.6"/></symbol>
+    <symbol id="i-avito" viewBox="0 0 24 24"><g fill="currentColor" stroke="none"><circle cx="16.4" cy="16.4" r="5.1"/><circle cx="6.9" cy="16.9" r="3.4"/><circle cx="16.9" cy="6.9" r="2.7"/><circle cx="7.2" cy="7.2" r="2"/></g></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M21 16.4v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.6 2 2 0 0 1 3.1 1.4h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L7.1 9.3a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2.1z" transform="translate(1 1) scale(.92)"/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M19.5 10c0 5.8-7.5 11.5-7.5 11.5S4.5 15.8 4.5 10a7.5 7.5 0 0 1 15 0z"/><circle cx="12" cy="10" r="2.8"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></symbol>
@@ -886,6 +895,7 @@
         <a class="icon-btn" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
         <a class="icon-btn" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg class="i"><use href="#i-ig"/></svg></a>
         <a class="icon-btn" data-link="tel" hidden href="#" aria-label="Позвонить"><svg class="i"><use href="#i-phone"/></svg></a>
+        <a class="icon-btn" data-link="avito" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Авито"><svg class="i"><use href="#i-avito"/></svg></a>
       </div>
     </div>
   </div>
@@ -985,7 +995,10 @@
     </section>
 
     <!-- ============ УСЛУГИ И ЦЕНЫ ============ -->
-    <!-- ✏️ Цены и длительность — примерные, замените на свои -->
+    <!-- ✏️ Цены и длительность — примерные, замените на свои.
+         Цена из Авито: добавьте ценнику атрибут data-avito-item с номером или ссылкой объявления,
+         например <p class="price" data-avito-item="4123456789">, и запустите tools/avito-sync.mjs —
+         он заменит число перед «₽», а «от» и «/ ед.» оставит. -->
     <section class="section bg-cloud" id="services">
       <div class="container">
         <div class="services__head">
@@ -1260,7 +1273,7 @@
     </section>
 
     <!-- ============ ОТЗЫВЫ ============ -->
-    <!-- ✏️ Замените на реальные отзывы клиенток (с их согласия) -->
+    <!-- ✏️ Замените на реальные отзывы клиенток (с их согласия) или подтяните их с Авито: tools/avito-sync.mjs -->
     <section class="section bg-cloud" id="reviews">
       <div class="container">
         <div class="reviews__head">
@@ -1275,6 +1288,7 @@
         </div>
 
         <div class="reviews__track reveal" tabindex="0" aria-label="Отзывы клиенток">
+          <!-- avito:reviews — блок до закрывающей метки перезаписывает tools/avito-sync.mjs -->
           <article class="review">
             <div class="review__quote" aria-hidden="true">“</div>
             <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
@@ -1305,6 +1319,13 @@
             <p class="review__text">Хожу к Цырене на массаж и уходы уже полгода. Руки волшебные: отёки уходят, овал подтянулся. Это мой любимый час в месяце.</p>
             <div class="review__author"><span class="avatar">Д</span><div><strong>Дарья</strong><span>Массаж лица</span></div></div>
           </article>
+          <!-- /avito:reviews -->
+        </div>
+
+        <div class="reviews__foot">
+          <!-- avito:rating — рейтинг с Авито, заполняет tools/avito-sync.mjs -->
+          <!-- /avito:rating -->
+          <a class="btn btn--ghost" data-link="avito" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-avito"/></svg>Все отзывы на Авито</a>
         </div>
       </div>
     </section>
@@ -1455,6 +1476,7 @@
             <a class="btn btn--ghost" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg>WhatsApp</a>
             <a class="btn btn--ghost" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-tg"/></svg>Telegram</a>
             <a class="btn btn--ghost" data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-ig"/></svg>Instagram*</a>
+            <a class="btn btn--ghost" data-link="avito" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-avito"/></svg>Авито</a>
           </div>
         </div>
 
@@ -1522,6 +1544,7 @@
             <li hidden><a data-link="wa" href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
             <li hidden><a data-link="tg" href="#" target="_blank" rel="noopener noreferrer">Telegram</a></li>
             <li><a data-link="ig" href="https://www.instagram.com/tsyrena.cosmetolog/" target="_blank" rel="noopener noreferrer">Instagram*</a></li>
+            <li hidden><a data-link="avito" href="#" target="_blank" rel="noopener noreferrer">Авито</a></li>
           </ul>
         </div>
         <div>
@@ -1587,6 +1610,8 @@
        telegram  — username без @: "tsyrena_cosmetolog"
        phone     — номер для звонка: "79161234567" (на сайте он сам покажется как +7 (916) 123-45-67)
        instagram — имя профиля без @
+       avito     — ссылка на профиль: "https://www.avito.ru/user/…/profile"
+       tools/avito-sync.mjs заполняет пустые phone, avito и address данными с Авито.
        Не используйте в значениях знак «меньше» — блок сломается.
        Пока поле пустое или заполнено неверно, его кнопки скрыты и заявки
        по этому каналу не отправляются.
@@ -1597,6 +1622,7 @@
     "telegram": "",
     "phone": "",
     "instagram": "tsyrena.cosmetolog",
+    "avito": "",
     "address": "г. Город, ул. Примерная, 1, кабинет 5",
     "hours": "Пн–Сб: 10:00–20:00, по записи"
   }
@@ -1645,6 +1671,7 @@
       const tg = get('telegram').replace(/^(?:https?:\/\/)?(?:www\.)?t\.me\//i, '').replace(/^@/, '').replace(/[/?#].*$/, '');
       const tel = ruNumber(get('phone'));
       const ig = get('instagram').replace(/^(?:https?:\/\/)?(?:www\.)?instagram\.com\//i, '').replace(/[/?#].*$/, '').replace(/^@/, '');
+      const avito = get('avito').replace(/^http:\/\//i, 'https://');
       const addressNode = $('[data-text="address"]');
       const address = get('address') || (addressNode ? addressNode.textContent.trim() : '');
 
@@ -1654,6 +1681,7 @@
         tg: /^[A-Za-z][A-Za-z0-9_]{4,31}$/.test(tg) && !/^your_?telegram$/i.test(tg),
         tel: /^7[3489]\d{9}$/.test(tel),
         ig: /^[A-Za-z0-9._]{1,30}$/.test(ig),
+        avito: /^https:\/\/(?:www\.|m\.)?avito\.ru\/[A-Za-z0-9_\-./?=&%]+$/.test(avito),
         map: address.length > 0,
       });
       const isOn = k => has(OK, k) && OK[k] === true;
@@ -1662,6 +1690,7 @@
         tg: 'https://t.me/' + tg,
         tel: 'tel:+' + tel,
         ig: 'https://www.instagram.com/' + ig + '/',
+        avito: avito,
         map: 'https://yandex.ru/maps/?text=' + encodeURIComponent(address),
       });
       const hasMessenger = isOn('wa') || isOn('tg');
