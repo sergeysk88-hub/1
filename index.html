@@ -31,17 +31,17 @@
   <!-- Защита: браузер выполняет только скрипты с этими хешами (см. tools/update-csp.mjs),
        форма не может никуда «отправиться» сама (form-action 'none'), нельзя подменить <base>.
        frame-ancestors (защита от встраивания во фрейм) задаётся заголовком сервера — см. _headers / .htaccess -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-qEqCuAPa6EbKwjoZkkcmahUN5ubwVFIXOxuMKK0ovd0='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://yandex.ru https://*.yandex.ru; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'sha256-/x7W7R75k8Roq0WaVRQX9blP4OufE5xbAdzklGxsgpw=' 'sha256-qB7iRWnJdqockO58gbItxjGvhqpgBw4Mwh5wpcW2RQk='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://yandex.ru https://*.yandex.ru; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Цырена — косметолог в Чебоксарах | Эстетика и инъекции</title>
-  <meta name="description" content="Косметолог Цырена в Чебоксарах: ботулинотерапия, контурная пластика, биоревитализация, чистки и пилинги. Естественный результат, сертифицированные препараты, индивидуальный план. Запись онлайн.">
+  <title>Косметолог в Чебоксарах — Цырена | Увеличение губ, ботокс, чистка лица</title>
+  <meta name="description" content="Косметолог Цырена в Чебоксарах, медицинское образование. Увеличение губ от 4 000 ₽, ботулинотерапия от 2 000 ₽, биоревитализация, чистки и пилинги. Бесплатная консультация. 5,0 на Авито — 20 отзывов.">
   <meta name="theme-color" content="#FFFFFF">
 
   <!-- Open Graph — превью ссылки в мессенджерах -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Цырена — косметолог в Чебоксарах | Эстетика и инъекции">
-  <meta property="og:description" content="Естественная красота без «эффекта процедуры». Запись на консультацию онлайн.">
+  <meta property="og:title" content="Косметолог в Чебоксарах — Цырена">
+  <meta property="og:description" content="Увеличение губ, ботулинотерапия, биоревитализация, чистки и пилинги. Бесплатная консультация, 5,0 на Авито.">
   <meta property="og:locale" content="ru_RU">
   <!-- ✏️ <meta property="og:image" content="https://ваш-сайт.ru/og-image.jpg"> -->
 
@@ -53,22 +53,164 @@
 
   <script data-csp>document.documentElement.classList.add('js');</script>
 
-  <!-- Микроразметка для Яндекса и Google. ✏️ Не связана с site-config — заполните адрес, телефон и сайт вручную
-       (tools/avito-sync.mjs подставит телефон и адрес с Авито вместо заглушек и добавит профиль в sameAs) -->
+  <!-- Микроразметка для Яндекса и Google: адрес, услуги и цены. ✏️ Не связана с site-config — меняйте вручную
+       (tools/avito-sync.mjs добавит телефон и ссылку на профиль Авито) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BeautySalon",
     "name": "Цырена — косметолог",
-    "description": "Эстетическая и инъекционная косметология",
-    "telephone": "+70000000000",
+    "description": "Эстетическая и инъекционная косметология в Чебоксарах",
     "address": {
       "@type": "PostalAddress",
+      "addressCountry": "RU",
+      "addressRegion": "Чувашская Республика",
       "addressLocality": "Чебоксары",
-      "streetAddress": "ул. Примерная, 1"
+      "streetAddress": "ул. Юрия Гагарина, 47к5"
     },
-    "sameAs": ["https://www.instagram.com/tsyrena.cosmetolog/"],
-    "priceRange": "₽₽"
+    "sameAs": [
+      "https://www.instagram.com/tsyrena.cosmetolog/",
+      "https://www.avito.ru/cheboksary/predlozheniya_uslug/tsyrena_kosmetolog_7444225774"
+    ],
+    "priceRange": "₽₽",
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Услуги и цены",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Увеличение губ"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "minPrice": 4000
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Ботулинотерапия"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "minPrice": 2000
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Лечение гипергидроза (ботулинотерапия подмышек)"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 6000
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Биоревитализация"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 5000
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Инъекции липолитиков"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 3000
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Чистка лица"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 2000
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Ультразвуковая чистка лица"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 1500
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Пилинг салициловой кислотой"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 1500
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Пилинг Джесснера"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 3500
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Пилинг BioRePeel"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 3000
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Консультация косметолога"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "priceCurrency": "RUB",
+            "price": 0
+          }
+        }
+      ]
+    }
   }
   </script>
 
@@ -926,23 +1068,23 @@
 
       <div class="container hero__grid">
         <div class="hero__content">
-          <p class="eyebrow reveal">Косметолог · эстетика и инъекции</p>
+          <p class="eyebrow reveal">Косметолог в Чебоксарах · инъекции и уход</p>
           <h1 class="hero__title reveal" data-delay="1">Красота, которая выглядит <em>естественно</em></h1>
-          <p class="hero__lead reveal" data-delay="2">Помогаю сохранить свежесть и молодость лица без «эффекта процедуры». Индивидуальный план, сертифицированные препараты и бережный подход на каждом этапе.</p>
+          <p class="hero__lead reveal" data-delay="2">Косметолог с медицинским образованием. Помогаю разгладить мимические морщины, сделать губы красивыми и вернуть коже сияние — без «эффекта процедуры». План составляю под ваш запрос и бюджет.</p>
           <div class="hero__cta reveal" data-delay="3">
-            <a class="btn btn--primary" href="#booking">Записаться на консультацию <svg class="i"><use href="#i-arrow"/></svg></a>
+            <a class="btn btn--primary" href="#booking">Бесплатная консультация <svg class="i"><use href="#i-arrow"/></svg></a>
             <a class="btn btn--ghost" href="#services">Услуги и цены</a>
           </div>
           <ul class="hero__trust reveal" data-delay="3">
-            <li><svg class="i"><use href="#i-check"/></svg>Сертифицированные препараты</li>
-            <li><svg class="i"><use href="#i-check"/></svg>Стерильность и одноразовые расходники</li>
-            <li><svg class="i"><use href="#i-check"/></svg>Контроль результата через 14 дней</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Медицинское образование</li>
+            <li><svg class="i"><use href="#i-check"/></svg>Консультация бесплатно</li>
+            <li><svg class="i"><use href="#i-check"/></svg>5,0 на Авито — 20 отзывов</li>
           </ul>
         </div>
 
         <div class="hero__visual reveal" data-delay="2">
-          <!-- ✏️ Главное фото: добавьте style="--img:url('hero.jpg')" -->
-          <div class="arch photo" data-mono="Ts" data-label="Ваше фото" role="img" aria-label="Цырена, косметолог"></div>
+          <!-- ✏️ Главное фото. Сейчас — кадр из баннера Авито (img/tsyrena.jpg); замените на оригинал фотосессии -->
+          <div class="arch photo" data-mono="Ts" data-label="Ваше фото" role="img" aria-label="Цырена, косметолог, со шприцем в руке" style="--img:url('img/tsyrena.jpg'); background-position: center 18%"></div>
 
           <div class="float-card float-card--top">
             <span class="float-card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span>
@@ -950,8 +1092,8 @@
           </div>
           <div class="float-card float-card--bottom">
             <div class="stars" aria-hidden="true">★★★★★</div>
-            <strong>Индивидуальный план</strong>
-            <span>после диагностики кожи</span>
+            <strong>5,0 на Авито</strong>
+            <span>20 отзывов — все на 5 звёзд</span>
           </div>
 
           <div class="badge" aria-hidden="true">
@@ -981,31 +1123,29 @@
     <section class="section" id="about">
       <div class="container about__grid">
         <div class="about__media reveal">
-          <!-- ✏️ Фото: style="--img:url('about.jpg')" -->
-          <div class="about__photo photo" data-mono="Ц" data-label="Фото Цырены" role="img" aria-label="Цырена в кабинете"></div>
+          <!-- ✏️ Фото: сейчас крупный план из баннера Авито (img/about.jpg) — замените на фото в кабинете -->
+          <div class="about__photo photo" data-mono="Ц" data-label="Фото Цырены" role="img" aria-label="Цырена, косметолог" style="--img:url('img/about.jpg')"></div>
           <!-- ✏️ Маленькое фото (кабинет, процесс работы) -->
-          <div class="about__photo-sm photo" data-label="Кабинет" role="img" aria-label="Кабинет косметолога"></div>
+          <!-- ✏️ Добавьте фото кабинета: style="--img:url('img/cabinet.jpg')" и data-label="Кабинет" role="img" aria-label="Кабинет косметолога" -->
+          <div class="about__photo-sm photo" aria-hidden="true"></div>
         </div>
 
         <div class="about__text">
           <p class="eyebrow reveal">Обо мне</p>
           <h2 class="reveal" data-delay="1">Привет, я <em>Цырена</em></h2>
-          <!-- ✏️ Замените текст на свою историю -->
-          <p class="reveal" data-delay="1">Я косметолог, и моя философия — не менять лицо, а подчёркивать его природную красоту. Я за умеренность, честность и результат, который окружающие замечают, но не могут понять, что именно изменилось.</p>
-          <p class="reveal" data-delay="2">Совмещаю эстетическую и инъекционную косметологию — так задачи решаются комплексно: от качества и тонуса кожи до возрастных изменений. Каждый план составляю индивидуально, после диагностики и подробной консультации.</p>
-
-          <!-- ✏️ Образование и квалификация -->
+          <!-- ✏️ Текст — по описанию и разделу «Образование» на Авито -->
+          <p class="reveal" data-delay="1">Я косметолог с медицинским образованием: в 2015 году окончила Дальневосточный государственный медицинский университет по специальности «Лечебное дело». В 2019-м прошла обучение на косметика-эстетиста, а потом — курсы по ботулинотерапии и контурной пластике губ.</p>
+          <p class="reveal" data-delay="2">Провожу эстетические и инъекционные процедуры: чистки и пилинги, биоревитализацию, ботулинотерапию, увеличение губ. План составляю индивидуально — под ваш запрос и бюджет. Принимаю в уютном кабинете в салоне красоты на ул. Юрия Гагарина, работаю с женщинами и мужчинами.</p>
           <ul class="checklist reveal" data-delay="2">
-            <li><svg class="i"><use href="#i-check"/></svg>Медицинское образование, специализация «Косметология»</li>
-            <li><svg class="i"><use href="#i-check"/></svg>Повышение квалификации по инъекционным методикам и анатомии лица</li>
-            <li><svg class="i"><use href="#i-check"/></svg>Регулярное обучение и обмен опытом с ведущими тренерами</li>
+            <li><svg class="i"><use href="#i-check"/></svg>2015 — «Лечебное дело», Дальневосточный государственный медицинский университет, Хабаровск</li>
+            <li><svg class="i"><use href="#i-check"/></svg>2019 — косметик-эстетист, Профакадемия</li>
+            <li><svg class="i"><use href="#i-check"/></svg>2021 — ботулинотерапия, контурная пластика губ</li>
+            <li><svg class="i"><use href="#i-check"/></svg>2023 — контурная пластика губ: новые техники</li>
           </ul>
-
-          <!-- ✏️ Укажите свои цифры -->
           <div class="stats reveal" data-delay="3">
-            <div><div class="stat__num">5+</div><div class="stat__label">лет практики</div></div>
-            <div><div class="stat__num">100%</div><div class="stat__label">оригинальные препараты</div></div>
-            <div><div class="stat__num">14</div><div class="stat__label">дней — контрольный осмотр</div></div>
+            <div><div class="stat__num">5,0</div><div class="stat__label">рейтинг на Авито</div></div>
+            <div><div class="stat__num">20</div><div class="stat__label">отзывов — все на 5 звёзд</div></div>
+            <div><div class="stat__num">2020</div><div class="stat__label">год, с которого я на Авито</div></div>
           </div>
           <div class="signature reveal" data-delay="3">Цырена</div>
         </div>
@@ -1013,7 +1153,7 @@
     </section>
 
     <!-- ============ УСЛУГИ И ЦЕНЫ ============ -->
-    <!-- ✏️ Цены и длительность — примерные, замените на свои.
+    <!-- ✏️ Цены — из прайс-листа на Авито (октябрь 2026).
          Цены с Авито: tools/avito-sync.mjs сам привязывает карточку к объявлению с тем же названием
          и пишет в ценник data-avito-item="номер" (кроме программ и цен «за единицу» — их привязывайте вручную).
          Номер или ссылку объявления можно указать и вручную,
@@ -1028,143 +1168,116 @@
           </div>
           <div class="tabs reveal" role="tablist" aria-label="Категории услуг">
             <button class="tab" role="tab" id="tab-inj" aria-controls="panel-inj" aria-selected="true">Инъекции</button>
-            <button class="tab" role="tab" id="tab-aes" aria-controls="panel-aes" aria-selected="false" tabindex="-1">Эстетика</button>
-            <button class="tab" role="tab" id="tab-prog" aria-controls="panel-prog" aria-selected="false" tabindex="-1">Программы</button>
+            <button class="tab" role="tab" id="tab-aes" aria-controls="panel-aes" aria-selected="false" tabindex="-1">Чистки и пилинги</button>
+            <button class="tab" role="tab" id="tab-prog" aria-controls="panel-prog" aria-selected="false" tabindex="-1">Консультация и уход</button>
           </div>
         </div>
 
         <!-- Инъекции -->
         <div class="cards" role="tabpanel" id="panel-inj" aria-labelledby="tab-inj" data-group="Инъекционная косметология">
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>30 мин</span></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-heart"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>1 ч</span></div>
+            <h3 class="card__title">Увеличение губ</h3>
+            <p class="card__text">Препарат на основе гиалуроновой кислоты (Южная Корея): 0,55 мл — 4 000 ₽, 1,1 мл — 7 000 ₽. Красивая форма и увлажнение без «перекачанности».</p>
+            <div class="card__bottom"><p class="price" data-avito-item="нет"><small>от</small> 4 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>15 мин</span></div>
             <h3 class="card__title">Ботулинотерапия</h3>
-            <p class="card__text">Разглаживает мимические морщины лба, межбровья и «гусиные лапки», сохраняя живую мимику. Эффект — до 4–6 месяцев.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 350 ₽ <small>/ ед.</small></p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <p class="card__text">Разглаживает мимические морщины. Брови — 2 000 ₽, лоб — 4 000 ₽. Зоны и дозировку подбираем на консультации.</p>
+            <div class="card__bottom"><p class="price" data-avito-item="нет"><small>от</small> 2 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-heart"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
-            <h3 class="card__title">Контурная пластика губ</h3>
-            <p class="card__text">Мягкий объём, чёткий контур и увлажнение. Работаю на естественность — губы выглядят как свои, только лучше.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 14 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span></div>
+            <h3 class="card__title">Лечение гипергидроза</h3>
+            <p class="card__text">Ботулинотерапия подмышек при повышенной потливости. Консультация, очищение, анестезия по желанию, разметка и рекомендации после процедуры.</p>
+            <div class="card__bottom"><p class="price" data-avito-item="3061701143">6 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-face"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
-            <h3 class="card__title">Контурная пластика лица</h3>
-            <p class="card__text">Скулы, подбородок, линия челюсти, носогубные складки. Восстановление утраченных объёмов и чёткий овал лица.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 16 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
-          </article>
-          <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>40 мин</span></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span></div>
             <h3 class="card__title">Биоревитализация</h3>
-            <p class="card__text">Глубокое увлажнение гиалуроновой кислотой: кожа становится плотной, гладкой и сияющей изнутри.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 8 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <p class="card__text">Глубокое увлажнение кожи гиалуроновой кислотой: кожа становится более плотной, гладкой и сияющей.</p>
+            <div class="card__bottom"><p class="price">5 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span><span class="tag tag--accent">Тренд</span></div>
-            <h3 class="card__title">Полинуклеотиды</h3>
-            <p class="card__text">Восстанавливают и уплотняют тонкую кожу, особенно вокруг глаз. Работают с тёмными кругами, сеточкой морщин и постакне.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 10 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
-          </article>
-          <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>40 мин</span></div>
-            <h3 class="card__title">Мезотерапия</h3>
-            <p class="card__text">Коктейли витаминов, аминокислот и пептидов для лица или кожи головы: тонус, ровный цвет, против выпадения волос.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 5 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
-          </article>
-          <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-layers"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
-            <h3 class="card__title">Коллагеностимуляторы</h3>
-            <p class="card__text">Запускают выработку собственного коллагена: лифтинг и улучшение качества кожи с накопительным эффектом.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 20 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
-          </article>
-          <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-face"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>30 мин</span></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-face"/></svg></span></div>
             <h3 class="card__title">Липолитики</h3>
-            <p class="card__text">Локальная коррекция второго подбородка и небольших жировых отложений — без операции и реабилитации.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 4 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <p class="card__text">Инъекции для локальной коррекции небольших жировых отложений, например второго подбородка.</p>
+            <div class="card__bottom"><p class="price">3 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-layers"/></svg></span></div>
+            <h3 class="card__title">Мезотерапия</h3>
+            <p class="card__text">Коктейли витаминов, аминокислот и пептидов для тонуса и ровного цвета кожи. Стоимость зависит от препарата.</p>
+            <div class="card__bottom"><p class="price" data-avito-item="нет"><small>цена на консультации</small></p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
         </div>
 
-        <!-- Эстетика -->
-        <div class="cards" role="tabpanel" id="panel-aes" aria-labelledby="tab-aes" data-group="Эстетическая косметология" hidden>
+        <!-- Чистки и пилинги -->
+        <div class="cards" role="tabpanel" id="panel-aes" aria-labelledby="tab-aes" data-group="Чистки и пилинги" hidden>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-search"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>30 мин</span></div>
-            <h3 class="card__title">Консультация и диагностика</h3>
-            <p class="card__text">Разбираем состояние кожи и ваши задачи, составляем план процедур и домашнего ухода. Стоимость засчитывается при записи на процедуру.</p>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>1 ч 30 мин</span></div>
+            <h3 class="card__title">Чистка лица</h3>
+            <p class="card__text">Комбинированная чистка: глубокое очищение пор и ровный тон. После процедуры подскажу, как скорректировать домашний уход.</p>
+            <div class="card__bottom"><p class="price">2 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+          </article>
+          <article class="card">
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span></div>
+            <h3 class="card__title">Ультразвуковая чистка</h3>
+            <p class="card__text">Бережное аппаратное очищение кожи ультразвуком — без травмирования.</p>
             <div class="card__bottom"><p class="price">1 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-drop"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>90 мин</span></div>
-            <h3 class="card__title">Комбинированная чистка</h3>
-            <p class="card__text">Ультразвуковая и мануальная чистка, успокаивающая маска. Чистые поры и ровный тон без травмирования кожи.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 4 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sun"/></svg></span></div>
+            <h3 class="card__title">Пилинг салициловой кислотой</h3>
+            <p class="card__text">Поверхностный пилинг для жирной и проблемной кожи: очищает поры и выравнивает рельеф.</p>
+            <div class="card__bottom"><p class="price">1 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sun"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>45 мин</span></div>
-            <h3 class="card__title">Химические пилинги</h3>
-            <p class="card__text">Подбираю пилинг под задачу: постакне, пигментация, тусклость, расширенные поры, первые морщины.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 3 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sun"/></svg></span></div>
+            <h3 class="card__title">Пилинг Джесснера</h3>
+            <p class="card__text">Срединный пилинг: работает с постакне, пигментацией и неровным рельефом кожи.</p>
+            <div class="card__bottom"><p class="price">3 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
-            <h3 class="card__title">Профессиональный уход</h3>
-            <p class="card__text">Увлажнение, питание, лифтинг-маски по типу кожи. Восстанавливает после солнца, стресса и перелётов.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 3 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span></div>
+            <h3 class="card__title">Пилинг BioRePeel</h3>
+            <p class="card__text">Итальянский двухфазный пилинг BioRePeel CL3 для обновления и сияния кожи.</p>
+            <div class="card__bottom"><p class="price">3 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-heart"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>60 мин</span></div>
-            <h3 class="card__title">Массаж лица</h3>
-            <p class="card__text">Скульптурный и буккальный массаж: снимает отёки и мышечные зажимы, подтягивает овал и возвращает тонус.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 3 500 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
-          </article>
-          <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sparkle"/></svg></span><span class="tag"><svg class="i"><use href="#i-clock"/></svg>40 мин</span></div>
-            <h3 class="card__title">Карбокситерапия</h3>
-            <p class="card__text">Неинвазивная процедура с CO₂: улучшает микроциркуляцию и цвет лица, уменьшает отёки и тёмные круги.</p>
-            <div class="card__bottom"><p class="price"><small>от</small> 3 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-heart"/></svg></span></div>
+            <h3 class="card__title">Процедуры «на выход»</h3>
+            <p class="card__text">Альгинатная маска, карбокситерапия — свежее отдохнувшее лицо перед событием.</p>
+            <div class="card__bottom"><p class="price" data-avito-item="нет"><small>цена на консультации</small></p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
         </div>
 
-        <!-- Программы -->
-        <div class="cards" role="tabpanel" id="panel-prog" aria-labelledby="tab-prog" data-group="Комплексные программы" hidden>
+        <!-- Консультация и уход -->
+        <div class="cards" role="tabpanel" id="panel-prog" aria-labelledby="tab-prog" data-group="Консультация и уход" hidden>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-sun"/></svg></span><span class="tag"><svg class="i"><use href="#i-calendar"/></svg>за 2–3 недели</span></div>
-            <h3 class="card__title">«Сияние к событию»</h3>
-            <p class="card__text">Перед свадьбой, фотосессией или праздником — свежая, отдохнувшая кожа точно в срок.</p>
-            <ul class="card__list">
-              <li><svg class="i"><use href="#i-check"/></svg>Чистка или мягкий пилинг</li>
-              <li><svg class="i"><use href="#i-check"/></svg>Биоревитализация</li>
-              <li><svg class="i"><use href="#i-check"/></svg>Уход с лифтинг-маской</li>
-            </ul>
-            <div class="card__bottom"><p class="price"><small>от</small> 14 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-search"/></svg></span><span class="tag tag--accent">Бесплатно</span></div>
+            <h3 class="card__title">Консультация</h3>
+            <p class="card__text">Разбираем задачи, смотрим кожу, проверяем противопоказания и составляем план процедур под ваш запрос и бюджет.</p>
+            <div class="card__bottom"><p class="price" data-avito-item="нет">Бесплатно</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-layers"/></svg></span><span class="tag tag--accent">Популярно</span></div>
-            <h3 class="card__title">«Anti-age»</h3>
-            <p class="card__text">Комплексное омоложение: работаем одновременно с мимикой, качеством кожи и тонусом.</p>
-            <ul class="card__list">
-              <li><svg class="i"><use href="#i-check"/></svg>Ботулинотерапия</li>
-              <li><svg class="i"><use href="#i-check"/></svg>Курс полинуклеотидов</li>
-              <li><svg class="i"><use href="#i-check"/></svg>Скульптурный массаж лица</li>
-            </ul>
-            <div class="card__bottom"><p class="price"><small>от</small> 30 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span></div>
+            <h3 class="card__title">Подбор домашнего ухода</h3>
+            <p class="card__text">Подберу уход под вашу кожу. Профессиональная косметика (в том числе Ангиофарм): доставка по Чебоксарам бесплатно при заказе от 3 000 ₽.</p>
+            <div class="card__bottom"><p class="price" data-avito-item="нет"><small>подбор</small> бесплатно</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
           <article class="card">
-            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-leaf"/></svg></span><span class="tag"><svg class="i"><use href="#i-calendar"/></svg>6–8 недель</span></div>
-            <h3 class="card__title">«Чистая кожа»</h3>
-            <p class="card__text">Для кожи, склонной к акне и воспалениям: убираем причины, а не только последствия.</p>
-            <ul class="card__list">
-              <li><svg class="i"><use href="#i-check"/></svg>Диагностика и план ухода</li>
-              <li><svg class="i"><use href="#i-check"/></svg>Курс пилингов и чисток</li>
-              <li><svg class="i"><use href="#i-check"/></svg>Подбор домашнего ухода</li>
-            </ul>
-            <div class="card__bottom"><p class="price"><small>от</small> 18 000 ₽</p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
+            <div class="card__top"><span class="card__icon"><svg class="i"><use href="#i-award"/></svg></span></div>
+            <h3 class="card__title">Подарочный сертификат</h3>
+            <p class="card__text">Сертификат на процедуры — подарок, который точно пригодится. Номинал обсудим в сообщениях.</p>
+            <div class="card__bottom"><p class="price" data-avito-item="нет"><small>цена на консультации</small></p><a class="link-arrow" href="#booking" data-book>Записаться <svg class="i"><use href="#i-arrow"/></svg></a></div>
           </article>
         </div>
 
         <div class="note reveal">
           <svg class="i"><use href="#i-info"/></svg>
-          <p>Точная стоимость зависит от зоны, препарата и количества единиц — её я называю на консультации, до начала процедуры. Никаких скрытых доплат.</p>
+          <p>Консультация бесплатная. Точная стоимость зависит от зоны и объёма препарата — называю её до начала процедуры. Имеются противопоказания, необходима консультация специалиста.</p>
         </div>
 
         <!-- avito:items — все объявления с Авито, заполняет tools/avito-sync.mjs -->
@@ -1179,30 +1292,30 @@
           <div class="section-head">
             <p class="eyebrow reveal">Безопасность</p>
             <h2 class="reveal" data-delay="1">Почему мне <em>доверяют</em> лицо</h2>
-            <p class="reveal" data-delay="2">Инъекции — это медицина. Поэтому я работаю по медицинским стандартам: от сбора анамнеза до контрольного осмотра.</p>
+            <p class="reveal" data-delay="2">Инъекции — это медицина. Поэтому каждая процедура начинается с консультации и проверки противопоказаний, а заканчивается рекомендациями по уходу.</p>
           </div>
           <a class="btn btn--ghost reveal" data-delay="3" href="#booking">Задать вопрос <svg class="i"><use href="#i-arrow"/></svg></a>
         </div>
         <div class="features">
           <div class="feature reveal">
-            <div class="feature__icon"><svg class="i"><use href="#i-shield"/></svg></div>
-            <h3>Оригинальные препараты</h3>
-            <p>Только сертифицированные препараты от официальных поставщиков. Упаковку вскрываю при вас — можно проверить подлинность и срок годности.</p>
+            <div class="feature__icon"><svg class="i"><use href="#i-award"/></svg></div>
+            <h3>Медицинское образование</h3>
+            <p>Диплом по специальности «Лечебное дело» (ДВГМУ, 2015), обучение косметологии и курсы по ботулинотерапии и контурной пластике губ.</p>
           </div>
           <div class="feature reveal" data-delay="1">
-            <div class="feature__icon"><svg class="i"><use href="#i-award"/></svg></div>
-            <h3>Медицинский подход</h3>
-            <p>Перед процедурой — анамнез и оценка противопоказаний. Знание анатомии лица — основа безопасного и красивого результата.</p>
+            <div class="feature__icon"><svg class="i"><use href="#i-shield"/></svg></div>
+            <h3>Препарат — при вас</h3>
+            <p>Упаковку вскрываю при вас: можно посмотреть препарат и срок годности до начала процедуры.</p>
           </div>
           <div class="feature reveal" data-delay="1">
             <div class="feature__icon"><svg class="i"><use href="#i-drop"/></svg></div>
-            <h3>Стерильность</h3>
-            <p>Одноразовые иглы и канюли, стерилизация инструментов и обработка кабинета по медицинским стандартам.</p>
+            <h3>Бережно и аккуратно</h3>
+            <p>Обеззараживание кожи, разметка и аппликационная анестезия по желанию. В отзывах чаще всего пишут «аккуратно» и «безболезненно».</p>
           </div>
           <div class="feature reveal" data-delay="2">
             <div class="feature__icon"><svg class="i"><use href="#i-heart"/></svg></div>
-            <h3>Честность</h3>
-            <p>Не продаю лишнего. Если процедура не нужна или есть противопоказания — скажу прямо и предложу альтернативу.</p>
+            <h3>Проверено на Авито</h3>
+            <p>На Авито с 2020 года: рейтинг 5,0 по 20 отзывам, значок «Надёжный исполнитель» и проверенные документы.</p>
           </div>
         </div>
       </div>
@@ -1274,34 +1387,34 @@
           <li class="step reveal">
             <div class="step__num">01</div>
             <h3>Консультация</h3>
-            <p>Обсуждаем ваши желания, проводим диагностику кожи и проверяем противопоказания.</p>
+            <p>Бесплатно. Обсуждаем ваши желания, смотрим кожу и проверяем противопоказания.</p>
           </li>
           <li class="step reveal" data-delay="1">
             <div class="step__num">02</div>
             <h3>План</h3>
-            <p>Составляю индивидуальный план: процедуры, препараты, сроки и итоговая стоимость — заранее.</p>
+            <p>Составляю план под ваш запрос и бюджет. Стоимость называю заранее, до начала процедуры.</p>
           </li>
           <li class="step reveal" data-delay="2">
             <div class="step__num">03</div>
             <h3>Процедура</h3>
-            <p>Комфортно, с аппликационной анестезией. Вскрываю препарат при вас, объясняю каждый шаг.</p>
+            <p>Очищение и обеззараживание, анестезия по желанию, разметка. Препарат вскрываю при вас и объясняю каждый шаг.</p>
           </li>
           <li class="step reveal" data-delay="3">
             <div class="step__num">04</div>
             <h3>Сопровождение</h3>
-            <p>Даю памятку по восстановлению, остаюсь на связи и приглашаю на контрольный осмотр через 14 дней.</p>
+            <p>Даю рекомендации по уходу после процедуры и остаюсь на связи, если появятся вопросы.</p>
           </li>
         </ol>
       </div>
     </section>
 
     <!-- ============ ОТЗЫВЫ ============ -->
-    <!-- ✏️ Замените на реальные отзывы клиенток (с их согласия) или подтяните их с Авито: tools/avito-sync.mjs -->
+    <!-- Отзывы с Авито (октябрь 2026). Обновляются через tools/avito-sync.mjs -->
     <section class="section bg-cloud" id="reviews">
       <div class="container">
         <div class="reviews__head">
           <div class="section-head">
-            <p class="eyebrow reveal">Отзывы</p>
+            <p class="eyebrow reveal">Отзывы с Авито</p>
             <h2 class="reveal" data-delay="1">Что говорят <em>клиентки</em></h2>
           </div>
           <div class="slider-nav reveal">
@@ -1314,39 +1427,149 @@
           <!-- avito:reviews — блок до закрывающей метки перезаписывает tools/avito-sync.mjs -->
           <article class="review">
             <div class="review__quote" aria-hidden="true">“</div>
-            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
-            <p class="review__text">Очень боялась эффекта «уточки», но Цырена сделала ровно то, что я хотела: губы аккуратные и выглядят естественно. Никто не понял, что я что-то делала — все просто говорят, что я посвежела.</p>
-            <div class="review__author"><span class="avatar">А</span><div><strong>Анна</strong><span>Контурная пластика губ</span></div></div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Обратилась за увеличением губ, работа была сделана даже лучше чем я ожидала, мастер очень приятный, все рассказывает и показывает</p>
+            <div class="review__author"><span class="avatar">Е</span><div><strong>Елена</strong><span>Увеличение губ · ноябрь 2025</span></div></div>
           </article>
           <article class="review">
             <div class="review__quote" aria-hidden="true">“</div>
-            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
-            <p class="review__text">Пришла с морщинами на лбу и страхом «замороженного» лица. Мимика осталась живой, а лицо стало отдохнувшим. Отдельное спасибо за подробную консультацию и контрольный осмотр.</p>
-            <div class="review__author"><span class="avatar">М</span><div><strong>Мария</strong><span>Ботулинотерапия</span></div></div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Спасибо большое. Обращаюсь не в первый раз по разным видам услуг. Безумно нравится подход мастера к клиенту. Абсолютно без болезненно. Объясняет всё доступным языком. Спасибо . Приду ещё)</p>
+            <div class="review__author"><span class="avatar">А</span><div><strong>Алёнка</strong><span>ноябрь 2025</span></div></div>
           </article>
           <article class="review">
             <div class="review__quote" aria-hidden="true">“</div>
-            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
-            <p class="review__text">Долго боролась с постакне. Цырена подобрала курс пилингов и домашний уход — через два месяца кожа стала ровной, впервые за много лет хожу без тонального крема.</p>
-            <div class="review__author"><span class="avatar">Е</span><div><strong>Екатерина</strong><span>Программа «Чистая кожа»</span></div></div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Делала препарат ботокса против гипергидроза, мастер очень понравилась, все делает аккуратно, кабинет чистый и уютный, препарат открыла при мне, показала ампулу сначала, сделала обезболивание, следы от уколов прошли быстро, никаких воспалений. Самое главное, препарат сработал, сухая, не нужен никакой дезодорант…</p>
+            <div class="review__author"><span class="avatar">П</span><div><strong>Полина</strong><span>Лечение гипергидроза · май 2026</span></div></div>
           </article>
           <article class="review">
             <div class="review__quote" aria-hidden="true">“</div>
-            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
-            <p class="review__text">Делала биоревитализацию перед свадьбой. Кожа буквально светилась на фото! В кабинете уютно и очень чисто, всё объясняют, не навязывают лишнего.</p>
-            <div class="review__author"><span class="avatar">О</span><div><strong>Ольга</strong><span>«Сияние к событию»</span></div></div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Сделали чистку и пилинг,все прошло замечательно! После процедуры разобрали мой уход для лица и внесли коррективы) Я очень довольна</p>
+            <div class="review__author"><span class="avatar">К</span><div><strong>Кристина</strong><span>Чистка лица и пилинг · август 2025</span></div></div>
           </article>
           <article class="review">
             <div class="review__quote" aria-hidden="true">“</div>
-            <div class="stars" aria-label="Оценка 5 из 5">★★★★★</div>
-            <p class="review__text">Хожу к Цырене на массаж и уходы уже полгода. Руки волшебные: отёки уходят, овал подтянулся. Это мой любимый час в месяце.</p>
-            <div class="review__author"><span class="avatar">Д</span><div><strong>Дарья</strong><span>Массаж лица</span></div></div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Ходила на процедуру чистки лица и пилинг . Очень понравилось, все подробно объяснила мастер о последующем уходе . Рекомендую 👍</p>
+            <div class="review__author"><span class="avatar">Л</span><div><strong>Людмила</strong><span>Чистка лица и пилинг · август 2023</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">очень профессионально и качественно выполнена работа губы просто вау 😍</p>
+            <p class="review__answer"><strong>Ответ Цырены</strong>Благодарю за отзыв 😌 😊</p>
+            <div class="review__author"><span class="avatar">Д</span><div><strong>Дарья</strong><span>Увеличение губ · ноябрь 2025</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Отличный мастер, помимо чистки лица и провела консультацию по уходу за кожей. Результатом довольна</p>
+            <div class="review__author"><span class="avatar">И</span><div><strong>Инесса</strong><span>Чистка лица · сентябрь 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Отличный мастер.аккуратно и безболезненно выполнила свою работу.результатом довольна.рекомендую!</p>
+            <p class="review__answer"><strong>Ответ Цырены</strong>Спасибо 😊 ❤️</p>
+            <div class="review__author"><span class="avatar">А</span><div><strong>Анастасия</strong><span>апрель 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Очень приятная девушка ,я к ней пойду ещё не раз )позвонила сестре ,чтобы тоже к ней сходила )рекомендую от души 👍</p>
+            <div class="review__author"><span class="avatar">Е</span><div><strong>Елена</strong><span>август 2025</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Очень понравилось. Все деликатно и тщательно, обязательно вернусь еще раз</p>
+            <div class="review__author"><span class="avatar">А</span><div><strong>Аня</strong><span>Чистка лица и пилинг · сентябрь 2025</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Спасибо за оказанную услугу, цена меня порадовала, очень приятная девушка 🤗</p>
+            <p class="review__answer"><strong>Ответ Цырены</strong>Спасибо 🙂 Приходите еще 😊</p>
+            <div class="review__author"><span class="avatar">А</span><div><strong>Алла</strong><span>ноябрь 2025</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Эта лучшая инвестиция в себя!</p>
+            <p class="review__answer"><strong>Ответ Цырены</strong>Несомненно 🫶</p>
+            <div class="review__author"><span class="avatar">В</span><div><strong>Виктория</strong><span>июль 2025</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Очень хороший мастер всем советую обращаться к ней. Спасибо большое</p>
+            <div class="review__author"><span class="avatar">С</span><div><strong>Светик</strong><span>Увеличение губ · октябрь 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Отличный мастер 😍 приятная девушка! Все было супер</p>
+            <div class="review__author"><span class="avatar">А</span><div><strong>Ариана</strong><span>Увеличение губ · январь 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Покупала сертификат на подарок. Все понравилось, быстрые ответы.Спасибо большое!</p>
+            <div class="review__author"><span class="avatar">А</span><div><strong>Алена</strong><span>Подарочный сертификат · январь 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Просто вау 😍 ❤️у этой прекрасной мастерицы золотые руки . Все как всегда на высоте 🤭</p>
+            <p class="review__answer"><strong>Ответ Цырены</strong>Спасибо 🥰 😊</p>
+            <div class="review__author"><span class="avatar">К</span><div><strong>Клиент Авито</strong><span>август 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Все хорошо, мне понравилось, отличный мастер, спасибо большое</p>
+            <div class="review__author"><span class="avatar">И</span><div><strong>Ирина</strong><span>август 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">Очень вежливая и приятная девушка мне все понравилась</p>
+            <div class="review__author"><span class="avatar">Н</span><div><strong>ННВ</strong><span>Увеличение губ · сентябрь 2026</span></div></div>
+          </article>
+          <article class="review">
+            <div class="review__quote" aria-hidden="true">“</div>
+            <span class="review__src"><svg class="i"><use href="#i-avito"/></svg>Авито</span>
+            <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+            <p class="review__text">работы была выполнена на все 100)</p>
+            <p class="review__answer"><strong>Ответ Цырены</strong>Благодарю за отзыв 🌸</p>
+            <div class="review__author"><span class="avatar">S</span><div><strong>Sv</strong><span>Увеличение губ · декабрь 2025</span></div></div>
           </article>
           <!-- /avito:reviews -->
         </div>
 
         <div class="reviews__foot">
           <!-- avito:rating — рейтинг с Авито, заполняет tools/avito-sync.mjs -->
+          <p class="reviews__rating"><span class="stars" aria-hidden="true">★★★★★</span><span><strong>5,0</strong> из 5 · 20 отзывов на Авито</span></p>
           <!-- /avito:rating -->
           <a class="btn btn--ghost" data-link="avito" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-avito"/></svg>Все отзывы на Авито</a>
         </div>
@@ -1363,16 +1586,25 @@
             <p class="reveal" data-delay="2">Не нашли ответ? Напишите мне — отвечу лично и подскажу, с чего начать.</p>
           </div>
           <a class="btn btn--primary reveal" data-delay="3" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg>Написать в WhatsApp</a>
+          <a class="btn btn--ghost reveal" data-delay="3" data-link="avito" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-avito"/></svg>Написать на Авито</a>
         </div>
 
         <div class="faq__list reveal">
           <details class="faq__item" name="faq" open>
+            <summary>Сколько стоит консультация?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>Консультация бесплатная. Разберём вашу задачу, проверим противопоказания и составим план процедур под ваш запрос и бюджет.</p></div>
+          </details>
+          <details class="faq__item" name="faq">
+            <summary>Где вы принимаете?<span class="faq__icon" aria-hidden="true"></span></summary>
+            <div class="faq__body"><p>В уютном кабинете в салоне красоты: Чебоксары, ул. Юрия Гагарина, 47к5, рядом с остановкой «Патриса Лумумбы». Приём по предварительной записи.</p></div>
+          </details>
+          <details class="faq__item" name="faq">
             <summary>Больно ли делать инъекции?<span class="faq__icon" aria-hidden="true"></span></summary>
-            <div class="faq__body"><p>Большинство процедур проходит с аппликационной анестезией — кремом, который наносится за 20–30 минут. Используются тонкие иглы и канюли, поэтому ощущения терпимые, а многие препараты уже содержат анестетик.</p></div>
+            <div class="faq__body"><p>По желанию делаю аппликационную анестезию — крем, который наносится перед процедурой. Ощущения терпимые, а многие препараты уже содержат анестетик.</p></div>
           </details>
           <details class="faq__item" name="faq">
             <summary>Когда будет виден результат?<span class="faq__icon" aria-hidden="true"></span></summary>
-            <div class="faq__body"><p>После контурной пластики — сразу, окончательный результат через 2 недели, когда уйдёт отёк. После ботулинотерапии эффект нарастает 3–14 дней. Биоревитализация и полинуклеотиды дают накопительный эффект после курса.</p></div>
+            <div class="faq__body"><p>После увеличения губ — сразу, окончательный результат примерно через 2 недели, когда уйдёт отёк. После ботулинотерапии эффект нарастает постепенно, в течение нескольких дней. Биоревитализация даёт накопительный эффект после курса.</p></div>
           </details>
           <details class="faq__item" name="faq">
             <summary>Какие есть противопоказания?<span class="faq__icon" aria-hidden="true"></span></summary>
@@ -1384,7 +1616,7 @@
           </details>
           <details class="faq__item" name="faq">
             <summary>Сколько держится эффект?<span class="faq__icon" aria-hidden="true"></span></summary>
-            <div class="faq__body"><p>В среднем ботулинотерапия — 4–6 месяцев, контурная пластика губ — 6–12 месяцев, коррекция скул и подбородка — до 12–18 месяцев. Срок зависит от препарата, обмена веществ и образа жизни.</p></div>
+            <div class="faq__body"><p>Срок зависит от процедуры, препарата, обмена веществ и образа жизни. Чего ждать именно вам, расскажу на консультации.</p></div>
           </details>
           <details class="faq__item" name="faq">
             <summary>Можно ли совмещать процедуры?<span class="faq__icon" aria-hidden="true"></span></summary>
@@ -1406,6 +1638,7 @@
               <a class="contact-chip" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-wa"/></svg><span><small>Быстрее всего</small><strong>Написать в WhatsApp</strong></span></a>
               <a class="contact-chip" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-tg"/></svg><span><small>Удобно в Telegram</small><strong>Написать в Telegram</strong></span></a>
               <a class="contact-chip" data-link="tel" hidden href="#"><svg class="i"><use href="#i-phone"/></svg><span><small>Позвонить</small><strong data-text="phone">+7 (000) 000-00-00</strong></span></a>
+              <a class="contact-chip" data-link="avito" hidden href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-avito"/></svg><span><small>Отвечаю в чате Авито</small><strong>Написать на Авито</strong></span></a>
             </div>
           </div>
 
@@ -1488,11 +1721,12 @@
         <div>
           <div class="section-head" style="margin-bottom:32px">
             <p class="eyebrow reveal">Контакты</p>
-            <h2 class="reveal" data-delay="1">Жду вас <em>в кабинете</em></h2>
+            <h2 class="reveal" data-delay="1">Жду вас <em>на Гагарина</em></h2>
           </div>
           <ul class="contact-list reveal" data-delay="2">
-            <li><span class="contact-list__icon"><svg class="i"><use href="#i-pin"/></svg></span><div><small>Адрес</small><strong data-text="address">г. Чебоксары, ул. Примерная, 1, кабинет 5</strong></div></li>
-            <li><span class="contact-list__icon"><svg class="i"><use href="#i-clock"/></svg></span><div><small>Часы работы</small><strong data-text="hours">Пн–Сб: 10:00–20:00, по записи</strong></div></li>
+            <li><span class="contact-list__icon"><svg class="i"><use href="#i-pin"/></svg></span><div><small>Адрес</small><strong data-text="address">г. Чебоксары, ул. Юрия Гагарина, 47к5</strong></div></li>
+            <li><span class="contact-list__icon"><svg class="i"><use href="#i-clock"/></svg></span><div><small>Приём</small><strong data-text="hours">По предварительной записи</strong></div></li>
+            <li><span class="contact-list__icon"><svg class="i"><use href="#i-arrow"/></svg></span><div><small>Как добраться</small><strong>Остановка «Патриса Лумумбы»</strong></div></li>
             <li hidden><span class="contact-list__icon"><svg class="i"><use href="#i-phone"/></svg></span><div><small>Телефон</small><a data-link="tel" data-text="phone" href="#">+7 (000) 000-00-00</a></div></li>
           </ul>
           <div class="socials reveal" data-delay="3">
@@ -1506,7 +1740,7 @@
         <div class="map reveal" data-delay="1">
           <div class="map__pin" aria-hidden="true"><div class="map__pin-dot"><span></span></div></div>
           <div class="map__card">
-            <div><strong>Кабинет косметологии</strong><span data-text="address">г. Чебоксары, ул. Примерная, 1, кабинет 5</span></div>
+            <div><strong>Кабинет в салоне красоты</strong><span data-text="address">г. Чебоксары, ул. Юрия Гагарина, 47к5</span></div>
             <a class="btn btn--primary btn--sm" data-link="map" hidden href="#" target="_blank" rel="noopener noreferrer">Построить маршрут</a>
           </div>
         </div>
@@ -1624,6 +1858,7 @@
     <a class="btn btn--primary" href="#booking">Записаться</a>
     <a class="icon-btn" data-link="wa" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg class="i"><use href="#i-wa"/></svg></a>
     <a class="icon-btn" data-link="tg" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Telegram"><svg class="i"><use href="#i-tg"/></svg></a>
+    <a class="icon-btn" data-link="avito" hidden href="#" target="_blank" rel="noopener noreferrer" aria-label="Авито"><svg class="i"><use href="#i-avito"/></svg></a>
   </div>
 
   <!-- =====================================================
@@ -1646,8 +1881,8 @@
     "phone": "",
     "instagram": "tsyrena.cosmetolog",
     "avito": "https://www.avito.ru/cheboksary/predlozheniya_uslug/tsyrena_kosmetolog_7444225774",
-    "address": "г. Чебоксары, ул. Примерная, 1, кабинет 5",
-    "hours": "Пн–Сб: 10:00–20:00, по записи"
+    "address": "г. Чебоксары, ул. Юрия Гагарина, 47к5",
+    "hours": "По предварительной записи"
   }
   </script>
 
@@ -2005,7 +2240,7 @@
           form.classList.add('is-off');
           const hint = $('.form__hint', form);
           if (hint) hint.textContent = 'Онлайн-запись временно недоступна — ' +
-            (isOn('tel') ? 'позвоните: ' + fmtRu(tel) : 'напишите мне в Instagram') + '.';
+            (isOn('tel') ? 'позвоните: ' + fmtRu(tel) : isOn('avito') ? 'напишите мне в чат на Авито' : 'напишите мне в Instagram') + '.';
           return;
         }
 
@@ -2043,7 +2278,7 @@
 
           const channel = pickChannel();
           if (!isOn(channel) || (channel !== 'wa' && channel !== 'tg')) {
-            if (formError) formError.textContent = 'Онлайн-запись пока недоступна — пожалуйста, позвоните или напишите в Instagram.';
+            if (formError) formError.textContent = 'Онлайн-запись пока недоступна — пожалуйста, позвоните или напишите на Авито.';
             return;
           }
 
