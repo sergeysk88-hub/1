@@ -30,6 +30,9 @@ const MAX_REVIEWS = 30;           // сколько отзывов показа�
 const MIN_SCORE = 4;              // отзывы с оценкой ниже не показываются (1 — показывать все)
 const MIN_TEXT = 15;              // отзывы без текста или короче — пропускаются
 const MAX_TEXT = 360;             // длинный текст отзыва обрезается (чтобы карточки не растягивались)
+// Отзывы с названием рецептурного препарата или диагнозом на сайт не берём (ФЗ «О рекламе», ст. 24).
+// Пустое выражение /$^/ отключает фильтр.
+const EXCLUDE_REVIEWS = /ботокс|ботул|диспорт|релатокс|ксеомин|гипергидроз/i;
 const SHOW_ANSWERS = true;        // показывать опубликованные ответы на отзывы
 const ANSWER_TITLE = 'Ответ Цырены';
 const AUTO_LINK = true;           // привязывать карточки услуг к объявлениям с тем же названием
@@ -114,7 +117,8 @@ async function fetchReviews(token) {
   for (let offset = 0, page = 0; page < 20 && out.length < MAX_REVIEWS; page++) {
     const data = await request(`/ratings/v1/reviews?offset=${offset}&limit=50`, { token });
     const list = Array.isArray(data && data.reviews) ? data.reviews : [];
-    out.push(...list.filter(r => r && Number(r.score) >= MIN_SCORE && Array.from(clean(r.text, 1e4)).length >= MIN_TEXT));
+    out.push(...list.filter(r => r && Number(r.score) >= MIN_SCORE && Array.from(clean(r.text, 1e4)).length >= MIN_TEXT &&
+      !EXCLUDE_REVIEWS.test(`${r.text} ${r.item && r.item.title}`)));
     offset += list.length;
     if (!list.length || offset >= Number(data.total || 0)) break;
   }
@@ -425,7 +429,7 @@ const titles = cardTitles(html);
 
 if (reviews) {
   // Подходящих отзывов нет — убираем и примеры: рядом с настоящим рейтингом они вводили бы в заблуждение
-  if (!reviews.length) warn(`подходящих отзывов нет (нужна оценка от ${MIN_SCORE} и текст) — примеры убраны, лента отзывов скрыта`);
+  if (!reviews.length) warn(`подходящих отзывов нет (нужна оценка от ${MIN_SCORE} и текст, без упоминаний препаратов и диагнозов) — примеры убраны, лента отзывов скрыта`);
   step(region(html, 'reviews', reviews.map(r => reviewHtml(r, titles)).join('\n')),
     reviews.length ? `отзывы: ${reviews.length} шт. (оценка от ${MIN_SCORE}, с текстом)` : 'отзывы: подходящих нет, лента скрыта');
 }
